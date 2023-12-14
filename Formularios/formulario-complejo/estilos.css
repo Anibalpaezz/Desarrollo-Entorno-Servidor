@@ -1,0 +1,54 @@
+/* Estilos para el cuerpo de la pagina */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+}
+
+button{
+    margin-top: 10px;
+}
+
+/* Estilos para el formulario */
+form {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para etiquetas y campos de entrada */
+label, input, select, textarea {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Estilos para los mensajes de error */
+.error-message {
+    color: red;
+    font-size: 14px;
+}
+
+/* Estilos para el boton de envio */
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Estilos para el boton de envio al pasar el cursor por encima */
+input[type="submit"]:hover {
+    background-color: #45a049;
+}

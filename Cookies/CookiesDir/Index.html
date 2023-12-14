@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+</head>
+<body>
+    <hr>
+    <h2>Listado de cookies por nivel</h2>
+
+    <p>Nivel 1 ➔ <a href="Nivel1/listado.php">Listado de cookies</a></p>
+    <p>Nivel 1 ➔ Nivel 2 ➔ <a href="Nivel1/Nivel2/listado.php">Listado de cookies</a></p>
+    <p>Novel 1 ➔ Nivel 2 ➔ Nivel 3 ➔ <a href="Nivel1/Nivel2/Nivel3/listado.php">Listado de cookies</a></p>
+
+    <h2>Creacion de cookies en diferentes niveles (directorios) por un script ubicado en /</h2>
+    
+    <h3>Se permite fijar nombre y contenido de la cookie, asi como el nivel</h3>
+
+    <form action="creaCookie.php" method="post">
+        <header>Creacion de cookies</header>
+        <div>
+            <label for="nombre">Nombre: </label>
+            <input type="text" name="nombre" id="">
+
+            <label for="contenido">Contenido: </label>
+            <input type="text" name="contenido" id="">
+        </div>
+        <div>
+            <label for="nivel">Nivel: </label>
+            <select name="nivel" id="">
+                <option value="a">1</option>
+                <option value="b">2</option>
+                <option value="c">3</option>
+            </select>
+            <input type="submit" value="Crear cookie">
+        </div>
+    </form>
+
+    <h2>Creacion de cookies en difernetes niveles (directorios) por un script ubicado en /</h2>
+
+    <h3>No se permite fijar nombre y contenido de la cookie, solo indicar el nivel</h3>
+    <p><a href="Nivel1/creaCookie.php">Crea cookie en /Nivel1</a></p>
+    <p><a href="Nivel1/Nivel2/creaCookie.php">Crea cookie en /Nivel1/Nivel2</a></p>
+    <p><a href="Nivel1/Nivel2/Nivel3/creaCookie.php">Crea cookie en /Nivel1/Nivel2/Nivel3</a></p>
+
+    
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container" style="border-radius: 5px; border-color: black; margin-top: 20px; background-color: beige; padding: 10px;">
+        <header class="h1" style="font-size: 75px;">Busqueda de canciones</header>
+        <form action="ejercicio1.php" class="form">
+            <div class="form-group" style="margin-top: 10px;">
+                <label for="" class="h5">Texto a buscar</label>
+                <input type="text" class="form-control" name="buscar" required placeholder="">
+            </div>
+            <div class="form-group" style="margin-top: 10px;">
+                <input type="radio" class="form-check-input" value="Titulos de cancion" name="filtro">Titulos de cancion
+                <input type="radio" class="form-check-input" value="Nombres de album" name="filtro">Nombres de album
+                <input type="radio" class="form-check-input" value="Ambos campos" name="filtro">Ambos campos
+            </div>
+            <div class="form-group" style="margin-top: 10px;">
+                <label for="" class="h5">Genero musical</label>    
+                <select name="genero" id="" class="form-select">
+                    <option value="Todos" selected>Todos</option>
+                    <option value="Acustica">Acustica</option>
+                    <option value="Banda Sonora">Banda Sonora</option>
+                    <option value="Blues">Blues</option>
+                    <option value="Electronica">Electronica</option>
+                    <option value="Folk">Folk</option>
+                    <option value="Jazz">Jazz</option>
+                    <option value="New Age">New Age</option>
+                    <option value="Pop">Pop</option>
+                    <option value="Rock">Rock</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success" name="enviar" style="margin-top: 10px; border-radius: 5px;">Enviar</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
