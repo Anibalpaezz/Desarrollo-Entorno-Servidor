@@ -1,20 +1,13 @@
 <?php
-    $conectar = new mysqli("localhost", "anibal", "nico", "inmobiliaria");
-
-    if ($conectar -> connect_errno) {
-        die("Error al conectar: " . $conectar -> connect_error);
-    }
+    include("conectar.php");
 
     $consulta = "SELECT * FROM noticias";
-    if ($mostrar = $conectar -> query($consulta)) {
-        while ($fila = $mostrar -> fetch_row()) {
-            foreach($fila  as $valor) {
-                echo $valor;
-            }
-
-            $mostrar -> close();
+    if ($resultado = mysqli_query($conexion, $consulta)) {
+        while ($fila = mysqli_fetch_row($resultado)) {
+            printf("%s, %s, %s, %s, %s, %s", $fila[0], $fila[1], $fila[2], $fila[3], $fila[4], $fila[5]);
+            echo "<br><br>";
         }
-
-        $conectar -> close();
+        mysqli_free_result($resultado);
     }
+    mysqli_close($conexion);
 ?>
