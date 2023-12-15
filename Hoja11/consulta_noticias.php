@@ -3,11 +3,23 @@
 
     $consulta = "SELECT * FROM noticias";
     if ($resultado = mysqli_query($conexion, $consulta)) {
+        echo "<table border='1'>";
+        echo "<tr><th>ID</th><th>Título</th><th>Autor</th><th>Fecha</th><th>Categoría</th><th>Contenido</th></tr>";
+        
         while ($fila = mysqli_fetch_row($resultado)) {
-            printf("%s, %s, %s, %s, %s, %s", $fila[0], $fila[1], $fila[2], $fila[3], $fila[4], $fila[5]);
-            echo "<br><br>";
+            echo "<tr>";
+            echo "<td>$fila[0]</td>";
+            echo "<td>$fila[1]</td>";
+            echo "<td>$fila[2]</td>";
+            echo "<td>$fila[3]</td>";
+            echo "<td>$fila[4]</td>";
+            echo "<td>$fila[5]</td>";
+            echo "</tr>";
         }
+        
+        echo "</table>";
         mysqli_free_result($resultado);
     }
+    
     mysqli_close($conexion);
 ?>
