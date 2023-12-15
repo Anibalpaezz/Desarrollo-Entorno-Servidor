@@ -1,5 +1,6 @@
 <?php
     include("conectar.php");
+    include("estilos.html");
 
     $consulta = "SELECT * FROM noticias";
     if ($resultado = mysqli_query($conexion, $consulta)) {
@@ -13,7 +14,7 @@
             echo "<td>$fila[2]</td>";
             echo "<td>$fila[3]</td>";
             echo "<td>$fila[4]</td>";
-            echo "<td>$fila[5]</td>";
+            echo "<td><img src='$fila[5]'></td>";
             echo "</tr>";
         }
         
