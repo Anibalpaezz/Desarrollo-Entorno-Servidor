@@ -51,5 +51,11 @@ insert into noticias (Titulo, Texto, Categoria, Fecha, Imagen) values ('Apartame
 insert into noticias (Titulo, Texto, Fecha) values ('Casa reformada en el barrio de la Juderia', 'Dos plantas y atico, 5 habitaciones patio interior, amplio garaje. Situada en una calle tranquila y a un paso del centro historico', '2004-02-07');
 insert into noticias (Titulo, Texto, Categoria, Fecha, Imagen) values ('Promocion en Costa Ballena', 'Con vistas al campo de golf, magnificas calidades, entorno ajardinado con piscina y servicio de vigilancia', 'Costas', '2007-02-09', 'apartamento9.jpg');
 
+CREATE TABLE votos(
+    ID INT(3) unsigned NOT NULL auto_increment PRIMARY KEY,
+    votos1 INT(10) unsigned NOT NULL default '0',
+    votos2 INT(10) unsigned NOT NULL default '0'
+)engine=innodb;
+INSERT INTO votos VALUES (1, 49, 12);
 
 
