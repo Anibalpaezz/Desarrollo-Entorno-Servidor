@@ -1,10 +1,38 @@
+drop database inmobiliaria;
+drop table noticias;
+drop table categorias;
+drop table usuarios;
+
+use inmobiliaria;
+select * from noticias;
+
 create database inmobiliaria character set utf8mb4 collate utf8mb4_spanish_ci;
 
 use inmobiliaria;
-drop database inmobiliaria;
+use inmobiliaria;
+create table categorias(
+    nombre varchar(50) primary key,
+    descripcion text
+)engine=innodb;
 
 use inmobiliaria;
-drop table noticias;
+insert into categorias (nombre) values ('Promociones');
+insert into categorias (nombre) values ('Ofertas');
+insert into categorias (nombre) values ('Costas');
+
+
+use inmobiliaria;
+create table usuarios(
+    ID int auto_increment primary key,
+    nombre varchar(50) not null,
+    contraseña varchar(20) not null,
+    permisos boolean
+)engine=innodb;
+
+use inmobiliaria;
+insert into usuarios (nombre, contraseña, permisos) values ('anibal', 'nico', true);
+insert into usuarios (nombre, contraseña, permisos) values ('nico', 'nico', false);
+insert into usuarios (nombre, contraseña, permisos) values ('carmen', 'nico', false);
 
 create table noticias(
     ID int(5) auto_increment not null primary key,
@@ -23,34 +51,5 @@ insert into noticias (Titulo, Texto, Categoria, Fecha, Imagen) values ('Apartame
 insert into noticias (Titulo, Texto, Fecha) values ('Casa reformada en el barrio de la Juderia', 'Dos plantas y atico, 5 habitaciones patio interior, amplio garaje. Situada en una calle tranquila y a un paso del centro historico', '2004-02-07');
 insert into noticias (Titulo, Texto, Categoria, Fecha, Imagen) values ('Promocion en Costa Ballena', 'Con vistas al campo de golf, magnificas calidades, entorno ajardinado con piscina y servicio de vigilancia', 'Costas', '2007-02-09', 'apartamento9.jpg');
 
-use inmobiliaria;
-select * from noticias;
-
-use inmobiliaria;
-drop table categorias;
-
-create table categorias(
-    nombre varchar(50) primary key,
-    descripcion text
-)engine=innodb;
-
-use inmobiliaria;
-insert into categorias (nombre) values ('Promociones');
-insert into categorias (nombre) values ('Ofertas');
-insert into categorias (nombre) values ('Costas');
 
 
-use inmobiliaria;
-drop table usuarios;
-
-create table usuarios(
-    ID int auto_increment primary key,
-    nombre varchar(50) not null,
-    contraseña varchar(20) not null,
-    permisos boolean
-)engine=innodb;
-
-use inmobiliaria;
-insert into usuarios (nombre, contraseña, permisos) values ('anibal', 'nico', true);
-insert into usuarios (nombre, contraseña, permisos) values ('nico', 'nico', false);
-insert into usuarios (nombre, contraseña, permisos) values ('carmen', 'nico', false);
