@@ -34,6 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo "Error no hay filas";
         }
+
+        mysqli_free_result($existe_usuario);
     } else {
         echo "No se encuentra ese usuario en la base de datos";
         echo "<br>";
@@ -41,13 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo $contraseña;
         die();
     }
-
-
-    /*if (es admin o no) {
-        # code...
-    } else {
-
-    }*/
 }
 
+mysqli_close($conexion);
 ?>
