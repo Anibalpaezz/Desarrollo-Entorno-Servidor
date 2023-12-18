@@ -6,9 +6,9 @@ $noticiasPorPagina = 2;
 
 $paginaActual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
 
-$offset = ($paginaActual - 1) * $noticiasPorPagina;
+$limite = ($paginaActual - 1) * $noticiasPorPagina;
 
-$consulta = "SELECT * FROM noticias LIMIT $offset, $noticiasPorPagina";
+$consulta = "SELECT * FROM noticias LIMIT $limite, $noticiasPorPagina";
 
 if ($resultado = mysqli_query($conexion, $consulta)) {
     echo "<table border='1'>";

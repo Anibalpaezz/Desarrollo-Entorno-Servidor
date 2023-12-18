@@ -9,7 +9,7 @@ if ($respuesta === 'votos1' || $respuesta === 'votos2') {
     $añadido = mysqli_query($conexion, $añadir_resultados);
 
     if ($añadido === TRUE) {
-        
+        echo '<a href="encuesta_resultados.php">resultados</a>';
     } else {
         
     }

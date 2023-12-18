@@ -25,7 +25,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo '<option value="2">Consultar Noticia 2</option>';
                 echo '<option value="3">Consultar Noticia 3</option>';
                 echo '</select>';
+                echo '<select name="consultar">';
+                echo '<option value="1">Consultar Noticia 1</option>';
+                echo '<option value="2">Consultar Noticia 2</option>';
+                echo '<option value="3">Consultar Noticia 3</option>';
+                echo '</select>';
                 echo '<button type="submit" name="enviar">Enviar</button>';
+                echo '<a href="consulta_noticias.php" class="button">';
             } else if ($valor == "0") {
                 echo '<label>Eliminar Noticia:</label><button type="submit" name="eliminar">Eliminar</button>';
             } else {

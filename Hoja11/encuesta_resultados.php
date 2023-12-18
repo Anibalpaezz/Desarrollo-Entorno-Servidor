@@ -34,7 +34,7 @@ mysqli_close($conexion);
 <body>
     <h1>Encuesta. Resultados de la encuesta</h1>
 
-    <table border="1">
+    <table>
         <thead>
             <tr>
                 <th>Respuesta</th>
