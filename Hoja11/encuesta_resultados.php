@@ -2,12 +2,6 @@
 include("conectar.php");
 include("estilos.html");
 
-/*     global $valor_si;
-    global $valor_no;
-    global $total;
-    global $porcentaje_si;
-    global $porcentaje_no; */
-
 $recuento_si = "SELECT votos1 FROM votos";
 $recuento_no = "SELECT votos2 FROM votos";
 $respuesta_si = mysqli_query($conexion, $recuento_si);
@@ -25,11 +19,8 @@ $total = $valor_si + $valor_no;
 $porcentaje_si = number_format((($valor_si / $total) * 100), 2);
 $porcentaje_no = number_format((($valor_no / $total) * 100), 2);
 
-
-
 mysqli_close($conexion);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -86,7 +77,9 @@ mysqli_close($conexion);
         </tbody>
     </table>
 
-    <p>Numero total de votos emitidos: <?php echo $total ?></p>
+    <p>Numero total de votos emitidos:
+        <?php echo $total ?>
+    </p>
 
     <a href="encuesta.php">Pagina de votacion</a>
 </body>
