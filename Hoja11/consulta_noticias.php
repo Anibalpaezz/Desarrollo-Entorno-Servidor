@@ -2,7 +2,15 @@
     include("conectar.php");
     include("estilos.html");
 
-    $consulta = "SELECT * FROM noticias";
+    session_start();
+
+    $_SESSION['usuario'] = $usuario;
+    $_SESSION['permisos'] = $valor;
+
+    if ($usuario == null) {
+        header ('Location: principal.html');
+    } else {
+        $consulta = "SELECT * FROM noticias";
     if ($resultado = mysqli_query($conexion, $consulta)) {
         echo "<table border='1'>";
         echo "<tr><th>ID</th><th>Título</th><th>Autor</th><th>Fecha</th><th>Categoría</th><th>Contenido</th></tr>";
@@ -23,4 +31,6 @@
     }
     
     mysqli_close($conexion);
+    }
+
 ?>

@@ -2,7 +2,12 @@
 include("conectar.php");
 include("estilos.html");
 
-$categorias = mysqli_query($conexion, "SELECT DISTINCT categoria FROM noticias");
+session_start();
+
+if ($usuario == null) {
+    header ('Location: principal.html');
+} else {
+    $categorias = mysqli_query($conexion, "SELECT DISTINCT categoria FROM noticias");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $categoriaSeleccionada = isset($_POST['categoria']) ? $_POST['categoria'] : 'Todas';
@@ -34,6 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 mysqli_close($conexion);
+
+}
 ?>
 
 <!DOCTYPE html>
