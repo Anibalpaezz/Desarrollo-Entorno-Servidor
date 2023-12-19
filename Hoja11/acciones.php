@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else if ($valor == "1") {
                 echo '<label>Crear Noticia:</label><button type="submit" name="crear">Crear</button>';
 
-                echo '<label>Eliminar Noticia:</label><button type="submit" name="eliminar">Eliminar</button>';
+                echo '<label>ver noticias:</label><button type="submit" name="eliminar">Eliminar</button>';
 
                 echo '<label>Consultar Noticia:</label>';
                 echo '<select name="consultar">';
