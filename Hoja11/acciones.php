@@ -2,62 +2,67 @@
 include("conectar.php");
 include("estilos.html");
 
-session_start();
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    session_start();
     $usuario = $_POST["usuario"];
     $contraseña = $_POST["pass"];
 
     $consulta_usuario = "SELECT * FROM usuarios WHERE nombre LIKE '$usuario' AND contraseña LIKE '$contraseña'";
-    $consulta_admin = "SELECT permisos FROM usuarios WHERE nombre LIKE '$usuario'";
+    $consulta_permisos = "SELECT permisos FROM usuarios WHERE nombre LIKE '$usuario'";
 
-    if ($existe_usuario = mysqli_query($conexion, $consulta_usuario)) {
-        if (mysqli_num_rows($existe_usuario) > 0) {
-            $es_admin = mysqli_query($conexion, $consulta_admin);
-            $fila = mysqli_fetch_assoc($es_admin);
-            $valor = $fila['permisos'];
-            
-            $_SESSION['usuario'] = $usuario;
-            $_SESSION['permisos'] = $valor;
+    $resultado_usuario = mysqli_query($conexion, $consulta_usuario);
 
-            if ($usuario == null) {
-                header ('Location: principal.html');
-            } else if ($valor == "1") {
-                echo '<label>Crear Noticia:</label><button type="submit" name="crear">Crear</button>';
+    if ($resultado_usuario && mysqli_num_rows($resultado_usuario) > 0) {
+        $resultado_permisos = mysqli_query($conexion, $consulta_permisos);
+        $fila_permisos = mysqli_fetch_assoc($resultado_permisos);
+        $valor_permisos = $fila_permisos['permisos'];
 
-                echo '<label>ver noticias:</label><button type="submit" name="eliminar">Eliminar</button>';
+        $_SESSION['usuario'] = $usuario;
+        $_SESSION['permisos'] = $valor_permisos;
 
-                echo '<label>Consultar Noticia:</label>';
-                echo '<select name="consultar">';
-                echo '<option value="1">Consultar Noticia 1</option>';
-                echo '<option value="2">Consultar Noticia 2</option>';
-                echo '<option value="3">Consultar Noticia 3</option>';
-                echo '</select>';
-                echo '<select name="consultar">';
-                echo '<option value="1">Consultar Noticia 1</option>';
-                echo '<option value="2">Consultar Noticia 2</option>';
-                echo '<option value="3">Consultar Noticia 3</option>';
-                echo '</select>';
-                echo '<button type="submit" name="enviar">Enviar</button>';
-                echo '<a href="consulta_noticias.php" class="button">';
-            } else if ($valor == "0") {
-                echo '<label>Eliminar Noticia:</label><button type="submit" name="eliminar">Eliminar</button>';
-            } else {
-                echo "Error el valor es un numero raro";
-            }
+        if ($valor_permisos == "1") {
+            echo "<h2>Bienvenido, " . $_SESSION['usuario'] . "!</h2>";
+
+            echo '<a href="consulta_noticias.php?id=1"><button class="button">Consultar Noticia 1</button></a>';
+            echo '<a href="consulta_noticias2.php?id=2"><button class="button">Consultar Noticia 2</button></a>';
+            echo '<a href="consulta_noticias3.php?id=3"><button class="button">Consultar Noticia 3</button></a>';
+            echo '<a href="encuesta.php?id=3"><button class="button">Votar en encuesta</button></a>';
+            echo '<a href="encuesta_resultados.php?id=3"><button class="button">Resultados encuesta</button></a>';
+            echo '<a href="eliminar_noticias.php"><button class="button">Borrar Noticia</button></a>';
+            echo '<a href="insertar_noticia.php"><button class="button">Insertar Noticia</button></a>';
+            echo '<a href="borrar_usuarios.php"><button class="button">Borrar Usuarios</button></a>';
+        } else if ($valor_permisos == "0") {
+            echo '<button onclick="decirHola()">Decir Hola</button>';
         } else {
-            echo "Error no hay filas";
+            echo "Error: el valor de permisos es desconocido.";
         }
 
-        mysqli_free_result($existe_usuario);
+        mysqli_free_result($resultado_permisos);
     } else {
-        echo "No se encuentra ese usuario en la base de datos";
+        echo "Error: no se encuentra ese usuario en la base de datos";
         echo "<br>";
         echo $usuario;
         echo $contraseña;
-        die();
+        header('Location: principal.html');
+        exit();
     }
-}
 
-mysqli_close($conexion);
+    mysqli_free_result($resultado_usuario);
+    mysqli_close($conexion);
+}
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de Inicio</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+</body>
+
+</html>

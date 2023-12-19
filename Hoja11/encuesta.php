@@ -35,6 +35,7 @@ if ($respuesta === 'votos1' || $respuesta === 'votos2') {
         <input type="radio" name="respuesta" id="no" value="votos2">
 
         <button type="submit">Enviar</button>
+        <button class="button"><a href="acciones.php">Volver</a></button>
     </form>
 </body>
 </html>

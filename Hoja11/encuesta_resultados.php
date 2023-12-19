@@ -81,7 +81,8 @@ mysqli_close($conexion);
         <?php echo $total ?>
     </p>
 
-    <a href="encuesta.php">Pagina de votacion</a>
+    <a href="encuesta.php"><button class="button">Pagina de votacion</button></a>
+    <a href="acciones.php"><button class="button">Volver</button></a>
 </body>
 
 </html>
