@@ -2,6 +2,8 @@
 include("conectar.php");
 include("estilos.html");
 
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario = $_POST["usuario"];
     $contraseña = $_POST["pass"];
@@ -14,7 +16,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $es_admin = mysqli_query($conexion, $consulta_admin);
             $fila = mysqli_fetch_assoc($es_admin);
             $valor = $fila['permisos'];
-            if ($valor == "1") {
+            
+            $_SESSION['usuario'] = $usuario;
+            $_SESSION['permisos'] = $valor;
+
+            if ($usuario == null) {
+                header ('Location: principal.html');
+            } else if ($valor == "1") {
                 echo '<label>Crear Noticia:</label><button type="submit" name="crear">Crear</button>';
 
                 echo '<label>Eliminar Noticia:</label><button type="submit" name="eliminar">Eliminar</button>';
