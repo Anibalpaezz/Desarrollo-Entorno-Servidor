@@ -5,7 +5,7 @@ include("estilos.html");
 session_start();
 
 if (!isset($_SESSION['usuario']) || !isset($_SESSION['permisos'])) {
-    header('Location: principal.html');
+    header('Location: index.html');
     exit();
 }
 
@@ -79,6 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         Imagen: <input type="file" name="imagen" required><br><br>
         <button type="submit" name="enviar">Enviar</button>
     </form>
+    <a href="acciones.php"><button class="button">Volver</button></a>
 </body>
 
 </html>

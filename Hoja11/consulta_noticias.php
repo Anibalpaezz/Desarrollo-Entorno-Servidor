@@ -5,7 +5,7 @@ include("estilos.html");
 session_start();
 
 if (!isset($_SESSION['usuario']) || !isset($_SESSION['permisos'])) {
-    header('Location: principal.html');
+    header('Location: index.html');
     exit();
 }
 

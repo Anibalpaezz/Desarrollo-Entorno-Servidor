@@ -34,13 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <h2>Registro de Usuario</h2>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+    <form action="registro.php" method="post">
         Nombre: <input type="text" name="nombre" required><br><br>
         Apellidos: <input type="text" name="apellidos" required><br><br>
         Email: <input type="email" name="email" required><br><br>
         Contraseña: <input type="text" name="contrasena" required><br><br>
         <button type="submit">Registrarse</button>
-        <a href="principal.html"><button type="button">Inicio</button></a>
+        <a href="index.html"><button type="button">Inicio</button></a>
     </form>
 </body>
 

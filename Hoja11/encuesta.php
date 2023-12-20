@@ -8,13 +8,9 @@ if ($respuesta === 'votos1' || $respuesta === 'votos2') {
     $añadir_resultados = "UPDATE votos SET $respuesta = $respuesta + 1";
     $añadido = mysqli_query($conexion, $añadir_resultados);
 
-    if ($añadido === TRUE) {
-        echo '<a href="encuesta_resultados.php">resultados</a>';
-    } else {
-        
-    }
+    
 } else {
-    echo "Respuesta no válida";
+    
 }
 ?>
 <!DOCTYPE html>
@@ -35,7 +31,9 @@ if ($respuesta === 'votos1' || $respuesta === 'votos2') {
         <input type="radio" name="respuesta" id="no" value="votos2">
 
         <button type="submit">Enviar</button>
-        <button class="button"><a href="acciones.php">Volver</a></button>
+        
     </form>
+    <button class="button"><a style="color: white;" href="acciones.php">Volver</a></button>
+    <button class="button"><a style="color: white;" href="encuesta_resultados.php">resultados</a></button>
 </body>
 </html>
