@@ -22,24 +22,35 @@ create table solicitantes(
     puntos int(3)
 )engine=innodb;
 
-drop table solicitantes;
 
 create table cursos(
     codigo int(6) primary key,
     nombre varchar(50),
     abierto boolean,
     numeroplazas int(2),
+    numeroSolicitudes int(2),
     plazoinscripcion date
 )engine=innodb;
 
-drop table cursos;
 
 create table solicitudes(
     dni varchar(9),
     codigocurso int(6),
     fechasolicitud date,
     admitido boolean
-    primary key (dni, codigocurso)
+    primary key (dni, codigocurso),
+    Foreign Key solicitudes(codigocurso) REFERENCES cursos(codigo)
+    Foreign Key solicitudes(dni) REFERENCES solicitantes(dni)
 )engine=innodb;
 
+create table usuarios(
+    ID int auto_increment primary key,
+    usuario varchar(30),
+    pass varchar(30),
+    permisos boolean
+)engine=InnoDB;
+
 drop table solicitudes;
+drop table cursos;
+drop table solicitantes;
+drop table usuarios;
