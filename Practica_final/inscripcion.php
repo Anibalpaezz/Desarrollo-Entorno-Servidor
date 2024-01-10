@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $grupo = $_POST["grupo"];
     $ingles = isset($_POST["ingles"]) ? 1 : 0;
     $cargo = isset($_POST["cargo"]) ? 1 : 0;
-    $n_cargo = $_POST["cargo"];
+    $n_cargo = $_POST["n_cargo"];
     $situacion = $_POST["situacion"];
 
     $tiempo = $_POST["tiempo"];
@@ -37,33 +37,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $especialidad = $_POST["especialidad"];
 
     $puntos = 0;
-    if ($ctic = 1) {
+    if ($ctic == 1) {
         $puntos += 4;
     }
-    if ($gtic = 1) {
+    if ($gtic == 1) {
         $puntos += 3;
     }
-    if ($pbilin = 1) {
+    if ($pbilin == 1) {
         $puntos += 3;
     }
-    if ($cargo = "1" || $cargo = "2" || $cargo = "3") {
+    if ($n_cargo == "Director" || $n_cargo == "Jefe de estudios" || $n_cargo == "Secretario") {
         $puntos += 2;
     }
-    if ($cargo = "4") {
+    if ($n_cargo == "Jefe de departamento") {
         $puntos += 1;
     }
     if ($años >= 15) {
         $puntos += 1;
     }
-    if ($situacion = "1") {
+    if ($situacion == "1") {
         $puntos += 1;
     }
 
     $insercion = "INSERT INTO solicitantes (dni, apellidos, nombre, telefono, correo, codigocentro, coordinadortic, grupotic, nombregrupo, pbilin, cargo, nombrecargo, situacion, fechanac, especialidad, puntos) 
-            VALUES ('$dni', '$apellidos', '$nombre', '$telefono', '$correo', '$cod_centro', $ctic, $gtic, '$grupo', $ingles, $cargo, '$nombrecargo', '$situacion', '$tiempo', '$especialidad', '$puntos')";
+            VALUES ('$dni', '$apellidos', '$nombre', '$telefono', '$correo', '$cod_centro', $ctic, $gtic, '$grupo', $ingles, $cargo, '$n_cargo', '$situacion', '$tiempo', '$especialidad', '$puntos')";
 
     if (mysqli_query($conexion, $insercion)) {
         echo "Registro exitoso.";
+        echo "DNI: $dni <br>";
+    echo "Apellidos: $apellidos <br>";
+    echo "Nombre: $nombre <br>";
+    echo "Telefono: $telefono <br>";
+    echo "Correo: $correo <br>";
+    echo "Codigo de centro: $cod_centro <br>";
+    echo "Coordinador TIC: $ctic <br>";
+    echo "Grupo TIC: $gtic <br>";
+    echo "Nombre de grupo: $grupo <br>";
+    echo "Bilingüe: $ingles <br>";
+    echo "Cargo: $cargo <br>";
+    echo "Nombre de cargo: $n_cargo <br>";
+    echo "Situacion: $situacion <br>";
     } else {
         echo "Error en el registro: " . mysqli_error($conexion);
     }

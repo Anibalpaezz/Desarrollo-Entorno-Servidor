@@ -6,18 +6,14 @@ session_start();
 $usuario = $_POST["usuario"];
 $contraseña = $_POST["pass"];
 
-$consulta_usuario = "SELECT * FROM usuarios WHERE nombre LIKE '$usuario' AND pass LIKE '$contraseña'";
-$consulta_permisos = "SELECT permisos FROM usuarios WHERE nombre LIKE '$usuario'";
+$consulta_solicitante = "SELECT * FROM solicitantes WHERE nombre LIKE '$usuario' AND pass LIKE '$contraseña'";
+$resultado_solicitante = mysqli_query($conexion, $consulta_usuario);
 
-$resultado_usuario = mysqli_query($conexion, $consulta_usuario);
+$consulta_admin = "SELECT * FROM usuarios WHERE nombre LIKE '$usuario' AND pass LIKE '$contraseña'";
+$resultado_admin = mysqli_query($conexion, $consulta_usuario);
 
-if ($resultado_usuario && mysqli_num_rows($resultado_usuario) > 0) {
-    $resultado_permisos = mysqli_query($conexion, $consulta_permisos);
-    $fila_permisos = mysqli_fetch_assoc($resultado_permisos);
-    $valor_permisos = $fila_permisos['permisos'];
-
+if ($resultado_usuario && mysqli_num_rows($resultado_solicitante) > 0 || $resultado_admin && mysqli_num_rows($resultado_admin) > 0) {
     $_SESSION['usuario'] = $usuario;
-    $_SESSION['permisos'] = $valor_permisos;
 
     header('Location: acciones.php');
 
