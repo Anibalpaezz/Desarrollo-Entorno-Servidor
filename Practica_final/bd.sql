@@ -23,6 +23,11 @@ create table solicitantes(
     puntos int(3)
 ) engine=innodb;
 
+use cursoscp;
+INSERT INTO solicitantes (dni, apellidos, nombre, telefono, correo, pass, codigocentro, coordinadortic, grupotic, nombregrupo, pbilin, cargo, nombrecargo, situacion, fechanac, especialidad, permisos, puntos)
+VALUES 
+('12345678T', 'Pérez', 'Juan', '654987321', 'juan.perez@email.com', 'hola', 'COD001', true, false, null, true, false, null, 'activo', '1990-01-15', 'Informática', true, 0);
+
 create table cursos(
     codigo int(6) auto_increment primary key,
     nombre varchar(50),
@@ -38,7 +43,9 @@ INSERT INTO cursos (nombre, abierto, numeroplazas, numeroSolicitudes, plazoinscr
     ('Programación en Java', true, 8, 0, '2024-02-15'),
     ('Diseño Gráfico', true, 10, 0, '2024-03-01'),
     ('Inglés Avanzado', true, 5, 0, '2024-03-15'),
-    ('Historia del Arte', true, 10, 0, '2024-04-01');
+    ('Historia del Arte', true, 10, 0, '2024-04-01'),
+    ('PHP', false, 10, 0, '2024-04-01'),
+    ('HTML', false, 10, 0, '2024-04-01');
 
 create table solicitudes(
     dni varchar(9),

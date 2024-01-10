@@ -2,7 +2,7 @@
 include("conectar.php");
 include("estilos.html");
 
-session_start();
+/* session_start();
 
 if (!isset($_SESSION['usuario']) || !isset($_SESSION['permisos'])) {
     header('Location: index.html');
@@ -10,14 +10,15 @@ if (!isset($_SESSION['usuario']) || !isset($_SESSION['permisos'])) {
 }
 
 $usuario = $_SESSION['usuario'];
-$valor = $_SESSION['permisos'];
+$valor = $_SESSION['permisos']; */
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $dni = $_POST["DNI"];
     $apellidos = $_POST["apellidos"];
     $nombre = $_POST["nombre"];
     $telefono = $_POST["telefono"];
     $correo = $_POST["correo"];
+    $pass = $_POST["pass"];
     $cod_centro = $_POST["cod_centro"];
     $ctic = isset($_POST["ctic"]) ? 1 : 0;
     $gtic = isset($_POST["gtic"]) ? 1 : 0;
@@ -43,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($gtic == 1) {
         $puntos += 3;
     }
-    if ($pbilin == 1) {
+    if ($ingles == 1) {
         $puntos += 3;
     }
     if ($n_cargo == "Director" || $n_cargo == "Jefe de estudios" || $n_cargo == "Secretario") {
@@ -60,23 +61,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $insercion = "INSERT INTO solicitantes (dni, apellidos, nombre, telefono, correo, codigocentro, coordinadortic, grupotic, nombregrupo, pbilin, cargo, nombrecargo, situacion, fechanac, especialidad, puntos) 
-            VALUES ('$dni', '$apellidos', '$nombre', '$telefono', '$correo', '$cod_centro', $ctic, $gtic, '$grupo', $ingles, $cargo, '$n_cargo', '$situacion', '$tiempo', '$especialidad', '$puntos')";
+            VALUES ('$dni', '$apellidos', '$nombre', '$telefono', '$correo', '$pass', '$cod_centro', $ctic, $gtic, '$grupo', $ingles, $cargo, '$n_cargo', '$situacion', '$tiempo', '$especialidad', '$puntos')";
 
     if (mysqli_query($conexion, $insercion)) {
-        echo "Registro exitoso.";
-        echo "DNI: $dni <br>";
-    echo "Apellidos: $apellidos <br>";
-    echo "Nombre: $nombre <br>";
-    echo "Telefono: $telefono <br>";
-    echo "Correo: $correo <br>";
-    echo "Codigo de centro: $cod_centro <br>";
-    echo "Coordinador TIC: $ctic <br>";
-    echo "Grupo TIC: $gtic <br>";
-    echo "Nombre de grupo: $grupo <br>";
-    echo "Bilingüe: $ingles <br>";
-    echo "Cargo: $cargo <br>";
-    echo "Nombre de cargo: $n_cargo <br>";
-    echo "Situacion: $situacion <br>";
+        echo "
+            Registro exitoso.<br>
+            DNI: $dni <br>
+            Apellidos: $apellidos <br>
+            Nombre: $nombre <br>
+            Telefono: $telefono <br>
+            Correo: $correo <br>
+            Contraseña: $pass <br>
+            Codigo de centro: $cod_centro <br>
+            Coordinador TIC: $ctic <br>
+            Grupo TIC: $gtic <br>
+            Nombre de grupo: $grupo <br>
+            Bilingüe: $ingles <br>
+            Cargo: $cargo <br>
+            Nombre de cargo: $n_cargo <br>
+            Situacion: $situacion <br>
+            ";
+
     } else {
         echo "Error en el registro: " . mysqli_error($conexion);
     }
