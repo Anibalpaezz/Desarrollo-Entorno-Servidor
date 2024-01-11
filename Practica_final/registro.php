@@ -52,9 +52,6 @@ include("estilos.html");
         <label for="ingles">Bilingüe:</label>
         <input type="checkbox" id="ingles" name="ingles"><br><br>
 
-        <label for="cargo">Cargo:</label>
-        <input type="checkbox" id="cargo" name="cargo"><br><br>
-
         <label for="n_cargo">Cargo:</label>
         <select id="n_cargo" name="n_cargo">
             <option value="Director">Director</option>
@@ -80,6 +77,7 @@ include("estilos.html");
         <a href="index.html"><button type="button">Inicio</button></a>
     </form>
 
+    <a href="acciones.php"><button class="button">Menu</button></a>
 </body>
 
 </html>

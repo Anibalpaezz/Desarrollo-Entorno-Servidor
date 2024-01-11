@@ -24,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $gtic = isset($_POST["gtic"]) ? 1 : 0;
     $grupo = $_POST["grupo"];
     $ingles = isset($_POST["ingles"]) ? 1 : 0;
-    $cargo = isset($_POST["cargo"]) ? 1 : 0;
     $n_cargo = $_POST["n_cargo"];
     $situacion = $_POST["situacion"];
 
@@ -60,8 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $puntos += 1;
     }
 
-    $insercion = "INSERT INTO solicitantes (dni, apellidos, nombre, telefono, correo, codigocentro, coordinadortic, grupotic, nombregrupo, pbilin, cargo, nombrecargo, situacion, fechanac, especialidad, puntos) 
-            VALUES ('$dni', '$apellidos', '$nombre', '$telefono', '$correo', '$pass', '$cod_centro', $ctic, $gtic, '$grupo', $ingles, $cargo, '$n_cargo', '$situacion', '$tiempo', '$especialidad', '$puntos')";
+    $insercion = "INSERT INTO solicitantes (dni, apellidos, nombre, telefono, correo, codigocentro, coordinadortic, grupotic, nombregrupo, pbilin, nombrecargo, situacion, fechanac, especialidad, puntos) 
+            VALUES ('$dni', '$apellidos', '$nombre', '$telefono', '$correo', '$pass', '$cod_centro', $ctic, $gtic, '$grupo', $ingles, '$n_cargo', '$situacion', '$tiempo', '$especialidad', '$puntos')";
 
     if (mysqli_query($conexion, $insercion)) {
         echo "
@@ -77,7 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             Grupo TIC: $gtic <br>
             Nombre de grupo: $grupo <br>
             Bilingüe: $ingles <br>
-            Cargo: $cargo <br>
             Nombre de cargo: $n_cargo <br>
             Situacion: $situacion <br>
             ";

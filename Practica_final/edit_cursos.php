@@ -64,5 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <input type="submit" value="Guardar cambios">
     </form>
+    <a href="acciones.php"><button class="button">Menu</button></a>
 </body>
 </html>

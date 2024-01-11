@@ -34,6 +34,8 @@ if ($_SESSION['permisos'] == 1) {
             <td>' . $row['numeroSolicitudes'] . '</td>
             <td>' . $row['plazoinscripcion'] . '</td>
             <td><a href="edit_cursos.php?codigo=' . $row['codigo'] . '">Editar</a></td>
+            <td><a href="abrir_cerrar.php?codigo=' . $row['codigo'] . '&abrir=abrir">Abrir</a></td>
+            <td><a href="abrir_cerrar.php?codigo=' . $row['codigo'] . '&cerrar=cerrar">Cerrar</a></td>
           </tr>';
         }
 
@@ -77,6 +79,7 @@ if ($_SESSION['permisos'] == 1) {
 }
 
 echo '<a href="cerrar_sesion.php"><button class="button">Cerrar sesion</button></a>';
+echo '<a href="acciones.php"><button class="button">Menu</button></a>';
 ?>
 
 <!DOCTYPE html>

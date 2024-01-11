@@ -86,6 +86,8 @@ $valor = $_SESSION['permisos'];
         <button type="submit">Registrarse</button>
         <a href="index.html"><button type="button">Inicio</button></a>
     </form>
+
+    <a href="acciones.php"><button class="button">Menu</button></a>
 </body>
 
 </html>

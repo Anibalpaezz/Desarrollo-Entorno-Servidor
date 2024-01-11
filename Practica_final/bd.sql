@@ -14,7 +14,6 @@ create table solicitantes(
     grupotic boolean,
     nombregrupo varchar(30) default null,
     pbilin boolean,
-    cargo boolean,
     nombrecargo char(30),
     situacion enum('activo', 'inactivo'),
     fechanac date,
