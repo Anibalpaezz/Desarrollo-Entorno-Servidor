@@ -1,4 +1,4 @@
-drop database cursoscp;
+drop database if exists cursoscp;
 create database cursoscp character set utf8mb4 collate utf8mb4_spanish_ci;
 use cursoscp;
 
@@ -23,9 +23,9 @@ create table solicitantes(
 ) engine=innodb;
 
 use cursoscp;
-INSERT INTO solicitantes (dni, apellidos, nombre, telefono, correo, pass, codigocentro, coordinadortic, grupotic, nombregrupo, pbilin, cargo, nombrecargo, situacion, fechanac, especialidad, permisos, puntos)
+INSERT INTO solicitantes (dni, apellidos, nombre, telefono, correo, pass, codigocentro, coordinadortic, grupotic, nombregrupo, pbilin, nombrecargo, situacion, fechanac, especialidad, permisos, puntos)
 VALUES 
-('12345678T', 'Pérez', 'Juan', '654987321', 'juan.perez@email.com', 'hola', 'COD001', true, false, null, true, false, null, 'activo', '1990-01-15', 'Informática', true, 0);
+('12345678T', 'Pérez', 'Juan', '654987321', 'juan.perez@email.com', 'hola', 'COD001', true, false, null, true, null, 'activo', '1990-01-15', 'Informática', true, 0);
 
 create table cursos(
     codigo int(6) auto_increment primary key,
@@ -50,7 +50,7 @@ create table solicitudes(
     dni varchar(9),
     codigocurso int(6),
     fechasolicitud date,
-    admitido boolean,
+    admitido boolean default false,
     primary key (dni, codigocurso),
     Foreign Key (codigocurso) REFERENCES cursos(codigo),
     Foreign Key (dni) REFERENCES solicitantes(dni)
