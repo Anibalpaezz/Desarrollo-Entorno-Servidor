@@ -4,6 +4,9 @@ include("conectar.php");
 include("estilos.html");
 
 session_start();
+if(!isset($_SESSION['usuario'])){
+    header('Location: index.html');
+}
 
 $usuario = $_SESSION['usuario'];
 $valor = $_SESSION['permisos'];

@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $actualiza_cursos = "UPDATE cursos SET nombre='$nombre', abierto=$abierto, numeroplazas=$numeroplazas, numeroSolicitudes=$numeroSolicitudes, plazoinscripcion='$plazoinscripcion' WHERE codigo=$codigo";
 
-    $resultado_actualiza = mysqli_query($conexion, $actualiza_cursos);
+    $resultado_actualiza = mysqli_query($conexion, $actualiza_cursos); 
 
     if (!$resultado_actualiza) {
         die('Error en la actualización: ' . mysqli_error($conexion));

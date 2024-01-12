@@ -3,6 +3,9 @@ include("conectar.php");
 include("estilos.html");
 
 session_start();
+if(!isset($_SESSION['usuario'])){
+    header('Location: index.html');
+}
 
 $usuario = $_SESSION['usuario'];
 $valor = $_SESSION['permisos'];
@@ -34,7 +37,8 @@ if ($row = mysqli_fetch_assoc($resultado_dni)) {
     $resultado_solicitud = mysqli_query($conexion, $insert_solicitud);
 
     if ($resultado_solicitud) {
-        echo "Correcto";
+        echo "<h2>Solicitud de inscripcion realizada correctamente</h2>";
+        echo '<a href="cursos.php"><button type="button">Volver atras</button></a>';
     } else {
         die('Error al ejecutar la consulta de inserción: ' . mysqli_error($conexion));
     }

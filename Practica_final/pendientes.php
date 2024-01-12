@@ -13,6 +13,8 @@ $valor = $_SESSION['permisos'];
 $disponibles = "SELECT * FROM cursos WHERE abierto = 1";
 $todos = "SELECT * FROM cursos";
 
+$info_usuario = "SELECT ";
+
 $resultado_disponibles = mysqli_query($conexion, $disponibles);
 $resultado_todos = mysqli_query($conexion, $todos);
 

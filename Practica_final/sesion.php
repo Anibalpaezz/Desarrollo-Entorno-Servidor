@@ -4,6 +4,7 @@ include("conectar.php");
 include("estilos.html");
 
 session_start();
+
 $usuario = $_POST["usuario"];
 $contraseña = $_POST["pass"];
 
