@@ -2,106 +2,106 @@
 include("conectar.php");
 include("estilos.html");
 
-session_start();
-if(!isset($_SESSION['usuario'])){
-    header('Location: index.html');
-}
+// Supongamos que recibes el código del curso cerrado en el parámetro $_GET['codigo_curso_cerrado']
+$codigo_curso = $_GET['codigo'];
 
-$usuario = $_SESSION['usuario'];
-$valor = $_SESSION['permisos'];
+/* $numero_iterador = "SELECT numeroplazas FROM cursos WHERE codigo = $codigo_curso";
+$resultado_iterador = mysqli_query($conexion, $numero_iterador);
 
-$disponibles = "SELECT * FROM cursos WHERE abierto = 1";
-$todos = "SELECT * FROM cursos";
+$solicitantes = "SELECT s.dni, s.codigocurso, s.fechasolicitud, s.admitido, COUNT(*) AS total_admitido FROM solicitudes s
+INNER JOIN solicitantes st ON s.dni = st.dni WHERE s.codigocurso = 1 GROUP BY st.dni ORDER BY total_admitido DESC, st.puntos DESC;"; */
 
-$info_usuario = "SELECT ";
+/* $solicitantes = "SELECT s.dni, s.apellidos, s.nombre
+FROM solicitantes s
+LEFT JOIN solicitudes so ON s.dni = so.dni
+WHERE so.admitido = false OR so.admitido IS NULL
+ORDER BY so.admitido ASC, s.puntos DESC
+LIMIT (SELECT numeroplazas FROM cursos WHERE codigo = $codigo_curso);"; */
 
-$resultado_disponibles = mysqli_query($conexion, $disponibles);
-$resultado_todos = mysqli_query($conexion, $todos);
+/* $resultado_solicitantes = mysqli_query($conexion, $solicitantes);
 
-if ($_SESSION['permisos'] == 1) {
-    if ($resultado_todos && mysqli_num_rows($resultado_todos) > 0) {
-        echo '<table border="1">
-        <tr>
-            <th>Código</th>
-            <th>Nombre</th>
-            <th>Abierto</th>
-            <th>Número de Plazas</th>
-            <th>Número de Solicitudes</th>
-            <th>Plazo de Inscripción</th>
-        </tr>';
-
-        while ($row = mysqli_fetch_assoc($resultado_todos)) {
-            echo '<tr>
-            <td>' . $row['codigo'] . '</td>
-            <td>' . $row['nombre'] . '</td>
-            <td>' . ($row['abierto'] ? 'Sí' : 'No') . '</td>
-            <td>' . $row['numeroplazas'] . '</td>
-            <td>' . $row['numeroSolicitudes'] . '</td>
-            <td>' . $row['plazoinscripcion'] . '</td>
-            <td><a href="edit_cursos.php?codigo=' . $row['codigo'] . '">Editar</a></td>
-            <td><a href="abrir_cerrar.php?codigo=' . $row['codigo'] . '&abrir=abrir">Abrir</a></td>
-            <td><a href="abrir_cerrar.php?codigo=' . $row['codigo'] . '&cerrar=cerrar">Cerrar</a></td>
-          </tr>';
-        }
-
-        echo '</table>';
-
-        echo '<a href="acciones.php"><button class="button">Menu</button></a>';
-
-        mysqli_free_result($result);
-        mysqli_close($conexion);
-    } else {
-        echo "<h1>No hay registros en la tabla Cursos</h1>";
+if ($resultado_solicitantes && mysqli_num_rows($resultado_solicitantes) > 0) {
+    while ($fila = mysqli_fetch_assoc($resultado_solicitantes)) {
+        $dni = $fila['dni'];
+        $update_query = "UPDATE solicitudes SET admitido = true WHERE dni = '$dni' AND codigocurso = $codigo_curso;";
+        mysqli_query($conexion, $update_query);
     }
+
+    echo "Solicitantes seleccionados y actualizados exitosamente.";
 } else {
-    if ($resultado_disponibles && mysqli_num_rows($resultado_disponibles) > 0) {
-        echo '<table border="1">
-        <tr>
-            <th>Código</th>
-            <th>Nombre</th>
-            <th>Abierto</th>
-            <th>Número de Plazas</th>
-            <th>Número de Solicitudes</th>
-            <th>Plazo de Inscripción</th>
-        </tr>';
+    echo "No hay solicitantes para seleccionar o el curso ya está completo.";
+}
 
-        while ($row = mysqli_fetch_assoc($resultado_disponibles)) {
-            echo '<tr>
-            <td>' . $row['codigo'] . '</td>
-            <td>' . $row['nombre'] . '</td>
-            <td>' . ($row['abierto'] ? 'Sí' : 'No') . '</td>
-            <td>' . $row['numeroplazas'] . '</td>
-            <td>' . $row['numeroSolicitudes'] . '</td>
-            <td>' . $row['plazoinscripcion'] . '</td>
-            <td><a href="confirma_inscripcion.php?codigo=' . $row['codigo'] . '">Inscribirse</a></td>
-          </tr>';
+mysqli_close($conexion); */
+
+
+$numero_iterador = "SELECT numeroplazas FROM cursos WHERE codigo = $codigo_curso";
+$resultado_iterador = mysqli_query($conexion, $numero_iterador);
+$plazas_disponibles = mysqli_fetch_assoc($resultado_iterador)['numeroplazas'];
+
+$solicitantes = "SELECT s.dni, s.codigocurso, s.fechasolicitud, s.admitido, COUNT(*) AS total_admitido FROM solicitudes s
+INNER JOIN solicitantes st ON s.dni = st.dni WHERE s.codigocurso = $codigo_curso GROUP BY st.dni ORDER BY total_admitido DESC, st.puntos DESC;";
+
+$resultado_solicitantes = mysqli_query($conexion, $solicitantes);
+
+$num_plazas_asignadas = 0;
+
+if ($resultado_solicitantes && mysqli_num_rows($resultado_solicitantes) > 0) {
+    while ($fila = mysqli_fetch_assoc($resultado_solicitantes)) {
+        if ($num_plazas_asignadas < $plazas_disponibles) {
+            $dni = $fila['dni'];
+            $update_query = "UPDATE solicitudes SET admitido = true WHERE dni = '$dni' AND codigocurso = $codigo_curso;";
+            mysqli_query($conexion, $update_query);
+            $num_plazas_asignadas++;
+        } else {
+            break;
         }
+    }
 
-        echo '</table>';
+    echo "Solicitantes seleccionados y actualizados exitosamente.";
+} else {
+    echo "No hay solicitantes para seleccionar o el curso ya está completo.";
+}
 
-        echo '<a href="acciones.php"><button class="button">Menu</button></a>';
+mysqli_close($conexion);
 
-        mysqli_free_result($result);
-        mysqli_close($conexion);
-    } else {
-        echo "<h1>No hay registros en la tabla Cursos</h1>";
+
+
+
+// Consulta para obtener los solicitantes ordenados por preferencia
+/* $solicitantes = "
+    SELECT s.dni, s.apellidos, s.nombre
+    FROM solicitantes s
+    LEFT JOIN solicitudes sol ON s.dni = sol.dni AND sol.admitido = true
+    LEFT JOIN cursos c ON sol.codigocurso = c.codigo
+    WHERE sol.dni IS NULL
+    AND c.codigo = $codigo_curso
+    ORDER BY s.puntos DESC
+";
+
+$resultado_solicitantes = mysqli_query($conexion, $solicitantes); */
+
+
+
+/* // Aquí puedes almacenar los DNI de los solicitantes seleccionados en un array
+$solicitantes_seleccionados = array();
+
+// Supongamos que $numero_plazas es el número de plazas disponibles en el curso
+while ($fila = mysqli_fetch_assoc($resultado_solicitantes)) {
+    $solicitantes_seleccionados[] = $fila['dni'];
+    if (count($solicitantes_seleccionados) >= $fila['numeroplazas']) {
+        break; // Si ya se han cubierto todas las plazas, sal del bucle
     }
 }
+
+// Actualizar la tabla de solicitudes marcando a los solicitantes como admitidos
+foreach ($solicitantes_seleccionados as $dni) {
+    $actualiza_tabla = "UPDATE solicitudes SET admitido = true WHERE dni = '$dni' AND codigocurso = $codigo_curso";
+    mysqli_query($conexion, $actualiza_tabla);
+}
+
+// Redirigir a la página deseada (puedes cambiar 'pagina_destino' por la URL correcta)
+header("Location: pagina_destino");
+exit; */
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú de Inicio</title>
-    <link rel="stylesheet" href="estilos.css">
-</head>
-
-<body>
-
-</body>
-
-</html>

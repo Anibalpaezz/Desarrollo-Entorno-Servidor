@@ -29,7 +29,7 @@ if(isset($_GET['codigo'])) {
                 die('Error en la actualización: ' . mysqli_error($conexion));
             }
 
-            header('Location: cursos.php');
+            header('Location: pendientes.php?codigo=' . $codigo);
             exit;
         }
     } else {

@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $puntos += 1;
     }
 
-    $insercion = "INSERT INTO solicitantes (dni, apellidos, nombre, telefono, correo, codigocentro, coordinadortic, grupotic, nombregrupo, pbilin, nombrecargo, situacion, fechanac, especialidad, puntos) 
+    $insercion = "INSERT INTO solicitantes (dni, apellidos, nombre, telefono, correo, pass, codigocentro, coordinadortic, grupotic, nombregrupo, pbilin, nombrecargo, situacion, fechanac, especialidad, puntos) 
             VALUES ('$dni', '$apellidos', '$nombre', '$telefono', '$correo', '$pass', '$cod_centro', $ctic, $gtic, '$grupo', $ingles, '$n_cargo', '$situacion', '$tiempo', '$especialidad', '$puntos')";
 
     if (mysqli_query($conexion, $insercion)) {

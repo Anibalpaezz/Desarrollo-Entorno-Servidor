@@ -3,7 +3,7 @@ include("conectar.php");
 include("estilos.html");
 
 session_start();
-if(!isset($_SESSION['usuario'])){
+if (!isset($_SESSION['usuario'])) {
     header('Location: index.html');
 }
 
@@ -39,7 +39,7 @@ if ($_SESSION['permisos'] == 1) {
             <td><a href="edit_cursos.php?codigo=' . $row['codigo'] . '">Editar</a></td>
             <td><a href="abrir_cerrar.php?codigo=' . $row['codigo'] . '&abrir=abrir">Abrir</a></td>
             <td><a href="abrir_cerrar.php?codigo=' . $row['codigo'] . '&cerrar=cerrar">Cerrar</a></td>
-          </tr>';
+        </tr>';
         }
 
         echo '</table>';
@@ -72,7 +72,7 @@ if ($_SESSION['permisos'] == 1) {
             <td>' . $row['numeroSolicitudes'] . '</td>
             <td>' . $row['plazoinscripcion'] . '</td>
             <td><a href="confirma_inscripcion.php?codigo=' . $row['codigo'] . '">Inscribirse</a></td>
-          </tr>';
+        </tr>';
         }
 
         echo '</table>';

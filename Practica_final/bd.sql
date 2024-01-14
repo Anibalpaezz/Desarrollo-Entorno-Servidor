@@ -23,9 +23,9 @@ create table solicitantes(
 ) engine=innodb;
 
 use cursoscp;
-INSERT INTO solicitantes (dni, apellidos, nombre, telefono, correo, pass, codigocentro, coordinadortic, grupotic, nombregrupo, pbilin, nombrecargo, situacion, fechanac, especialidad, permisos, puntos)
+INSERT INTO solicitantes (dni, apellidos, nombre, telefono, correo, pass, codigocentro, coordinadortic, grupotic, nombregrupo, pbilin, nombrecargo, situacion, fechanac, especialidad, permisos)
 VALUES 
-('12345678T', 'Pérez', 'Juan', '654987321', 'juan.perez@email.com', 'hola', 'COD001', true, false, null, true, null, 'activo', '1990-01-15', 'Informática', true, 0);
+('12345678T', 'Pérez', 'Juan', '654987321', 'juan.perez@email.com', 'hola', 'COD001', true, false, null, true, null, 'activo', '1990-01-15', 'Informática', true);
 
 create table cursos(
     codigo int(6) auto_increment primary key,
