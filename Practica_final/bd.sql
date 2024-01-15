@@ -26,17 +26,6 @@ use cursoscp;
 INSERT INTO solicitantes (dni, apellidos, nombre, telefono, correo, pass, codigocentro, coordinadortic, grupotic, nombregrupo, pbilin, nombrecargo, situacion, fechanac, especialidad, permisos)
 VALUES 
 ('35802306T', 'Cox', 'Pablo', '654987321', 'juan.perez@email.com', 'nico', 'COD001', true, false, 'DAW', true, null, 'activo', '1990-01-15', 'Informática', true);
-('28550540L', 'Avila', 'Nicolas', '654987321', 'juan.perez@email.com', 'nico', 'COD001', true, false, 'DAW', true, null, 'activo', '1990-01-15', 'Informática', true);
-('49165403M', 'Gallegos', 'Jaime', '654987321', 'juan.perez@email.com', 'nico', 'COD001', true, false, 'DAW', true, null, 'activo', '1990-01-15', 'Informática', true);
-('89753906V', 'Estes', 'Julio', '654987321', 'juan.perez@email.com', 'nico', 'COD001', true, false, 'DAW', true, null, 'activo', '1990-01-15', 'Informática', true);
-('43050442P', 'Pérez', 'Alejandro', '654987321', 'juan.perez@email.com', 'nico', 'COD001', true, false, 'DAW', true, null, 'activo', '1990-01-15', 'Informática', true);
-('40818447W', 'Ruiz', 'Esther', '654987321', 'juan.perez@email.com', 'nico', 'COD001', true, false, 'DAW', true, null, 'activo', '1990-01-15', 'Informática', true);
-('84911032T', 'Martinez', 'Anibal', '654987321', 'juan.perez@email.com', 'nico', 'COD001', true, true, 'DAW', true, null, 'activo', '1990-01-15', 'Informática', true);
-('71928619Y', 'Plaza', 'Justin', '654987321', 'juan.perez@email.com', 'nico', 'COD001', true, false, 'DAW', true, null, 'activo', '1990-01-15', 'Informática', true);
-('34978895N', 'Diaz', 'Bruno', '654987321', 'juan.perez@email.com', 'nico', 'COD001', true, false, 'DAW', true, null, 'activo', '1990-01-15', 'Informática', true);
-('27554868V', 'Garcia', 'Carmen', '654987321', 'juan.perez@email.com', 'nico', 'COD001', true, false, 'DAW', true, null, 'activo', '1990-01-15', 'Informática', true);
-('89194351Y', 'Castro', 'Daniel', '654987321', 'juan.perez@email.com', 'nico', 'COD001', true, false, 'DAW', true, null, 'activo', '1990-01-15', 'Informática', true);
-('26447673L', 'Gil', 'Cristina', '654987321', 'juan.perez@email.com', 'nico', 'COD001', true, false, 'DAW', true, null, 'activo', '1990-01-15', 'Informática', true);
 
 create table cursos(
     codigo int(6) auto_increment primary key,

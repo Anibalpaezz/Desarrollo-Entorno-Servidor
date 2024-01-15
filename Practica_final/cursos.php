@@ -18,6 +18,7 @@ $resultado_todos = mysqli_query($conexion, $todos);
 
 if ($_SESSION['permisos'] == 1) {
     if ($resultado_todos && mysqli_num_rows($resultado_todos) > 0) {
+        echo '<div id="contenido">';
         echo '<h1>Todos los cursos</h1>
         <table border="1">
         <tr>
@@ -25,7 +26,6 @@ if ($_SESSION['permisos'] == 1) {
             <th>Nombre</th>
             <th>Abierto</th>
             <th>Número de Plazas</th>
-            <th>Número de Solicitudes</th>
             <th>Plazo de Inscripción</th>
             <th colspan="3">Acciones</th>
         </tr>';
@@ -36,7 +36,6 @@ if ($_SESSION['permisos'] == 1) {
             <td>' . $row['nombre'] . '</td>
             <td>' . ($row['abierto'] ? 'Sí' : 'No') . '</td>
             <td>' . $row['numeroplazas'] . '</td>
-            <td>' . $row['numeroSolicitudes'] . '</td>
             <td>' . $row['plazoinscripcion'] . '</td>
             <td><a href="edit_cursos.php?codigo=' . $row['codigo'] . '">Editar</a></td>
             <td><a href="abrir_cerrar.php?codigo=' . $row['codigo'] . '&abrir=abrir">Abrir</a></td>
@@ -48,6 +47,7 @@ if ($_SESSION['permisos'] == 1) {
 
         echo '<a href="acciones.php"><button class="button">Menu</button></a>';
         echo '<a href="crear_curso.php"><button class="button">Crear curso</button></a>';
+        echo '</div>';
 
         mysqli_free_result($resultado_todos);
         mysqli_close($conexion);
@@ -56,6 +56,7 @@ if ($_SESSION['permisos'] == 1) {
     }
 } else {
     if ($resultado_disponibles && mysqli_num_rows($resultado_disponibles) > 0) {
+        echo '<div id="contenido">';
         echo '<h1>Todos los cursos</h1>
         <table border="1">
         <tr>
@@ -82,6 +83,7 @@ if ($_SESSION['permisos'] == 1) {
         echo '</table>';
 
         echo '<a href="acciones.php"><button class="button">Menu</button></a>';
+        echo '</div>';
 
         mysqli_free_result($resultado_disponibles);
         mysqli_close($conexion);
@@ -91,19 +93,3 @@ if ($_SESSION['permisos'] == 1) {
 }
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú de Inicio</title>
-    <link rel="stylesheet" href="estilos.css">
-</head>
-
-<body>
-
-</body>
-
-</html>

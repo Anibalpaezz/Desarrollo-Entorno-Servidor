@@ -11,6 +11,7 @@ $solicitudes = "SELECT * FROM solicitudes";
 $resultado_solicitudes = mysqli_query($conexion, $solicitudes);
 
 if ($resultado_solicitudes) {
+    echo '<div id="contenido">';
     echo '<h1>Lista de Solicitudes</h1>
         <table>
         <tr>
@@ -32,6 +33,7 @@ if ($resultado_solicitudes) {
 
     echo '</table>';
     echo '<a href="acciones.php"><button class="button">Menu</button></a>';
+    echo '</div>';
 
 } else {
     echo "Error al obtener los datos de la tabla solicitudes: " . mysqli_error($conexion);

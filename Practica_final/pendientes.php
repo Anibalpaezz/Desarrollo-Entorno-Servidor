@@ -39,8 +39,12 @@ $numero_iterador = "SELECT numeroplazas FROM cursos WHERE codigo = $codigo_curso
 $resultado_iterador = mysqli_query($conexion, $numero_iterador);
 $plazas_disponibles = mysqli_fetch_assoc($resultado_iterador)['numeroplazas'];
 
-$solicitantes = "SELECT s.dni, s.codigocurso, s.fechasolicitud, s.admitido, COUNT(*) AS total_admitido FROM solicitudes s
-INNER JOIN solicitantes st ON s.dni = st.dni WHERE s.codigocurso = $codigo_curso GROUP BY st.dni ORDER BY total_admitido DESC, st.puntos DESC;";
+$solicitantes = "SELECT s.dni, s.codigocurso, s.fechasolicitud, s.admitido, 
+COUNT(*) AS total_admitido FROM solicitudes s
+INNER JOIN solicitantes st ON s.dni = st.dni 
+WHERE s.codigocurso = $codigo_curso GROUP BY st.dni 
+ORDER BY CASE WHEN st.dni IN (SELECT dni FROM solicitudes WHERE codigocurso != $codigo_curso) THEN 1 ELSE 0 END,
+total_admitido DESC, st.puntos DESC;";
 
 $resultado_solicitantes = mysqli_query($conexion, $solicitantes);
 
@@ -59,6 +63,8 @@ if ($resultado_solicitantes && mysqli_num_rows($resultado_solicitantes) > 0) {
     }
 
     echo "Solicitantes seleccionados y actualizados exitosamente.";
+    echo '<a href="cursos.php"><button class="button">Volver</button></a>';
+
 } else {
     echo "No hay solicitantes para seleccionar o el curso ya está completo.";
     echo '<a href="cursos.php"><button class="button">Volver</button></a>';
@@ -66,10 +72,6 @@ if ($resultado_solicitantes && mysqli_num_rows($resultado_solicitantes) > 0) {
 
 mysqli_close($conexion);
 
-
-
-
-// Consulta para obtener los solicitantes ordenados por preferencia
 /* $solicitantes = "
     SELECT s.dni, s.apellidos, s.nombre
     FROM solicitantes s
@@ -82,12 +84,11 @@ mysqli_close($conexion);
 
 $resultado_solicitantes = mysqli_query($conexion, $solicitantes); */
 
+/* 
 
-
-/* // Aquí puedes almacenar los DNI de los solicitantes seleccionados en un array
 $solicitantes_seleccionados = array();
 
-// Supongamos que $numero_plazas es el número de plazas disponibles en el curso
+
 while ($fila = mysqli_fetch_assoc($resultado_solicitantes)) {
     $solicitantes_seleccionados[] = $fila['dni'];
     if (count($solicitantes_seleccionados) >= $fila['numeroplazas']) {
@@ -95,14 +96,14 @@ while ($fila = mysqli_fetch_assoc($resultado_solicitantes)) {
     }
 }
 
-// Actualizar la tabla de solicitudes marcando a los solicitantes como admitidos
+
 foreach ($solicitantes_seleccionados as $dni) {
     $actualiza_tabla = "UPDATE solicitudes SET admitido = true WHERE dni = '$dni' AND codigocurso = $codigo_curso";
     mysqli_query($conexion, $actualiza_tabla);
 }
 
-// Redirigir a la página deseada (puedes cambiar 'pagina_destino' por la URL correcta)
+
 header("Location: pagina_destino");
 exit; */
 
-?>
+?> */

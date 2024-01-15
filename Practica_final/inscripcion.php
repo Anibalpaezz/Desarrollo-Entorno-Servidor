@@ -2,6 +2,12 @@
 include("conectar.php");
 include("estilos.php");
 
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header('Location: index.html');
+}
+
+
 /* session_start();
 
 if (!isset($_SESSION['usuario']) || !isset($_SESSION['permisos'])) {
@@ -80,8 +86,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             Situacion: $situacion <br>
             ";
 
+            echo '<a href="acciones.php"><button class="button">Menu</button></a>';
+
     } else {
-        echo "Error en el registro: " . mysqli_error($conexion);
+        echo "Error en el registro no se ha introducido algun parametro valor" . mysqli_error($conexion);
     }
 
     mysqli_close($conexion);
