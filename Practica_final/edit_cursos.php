@@ -1,6 +1,6 @@
 <?php
 include("conectar.php");
-include("estilos.html");
+include("estilos.php");
 
 if(isset($_GET['codigo'])) {
     $codigo = $_GET['codigo'];

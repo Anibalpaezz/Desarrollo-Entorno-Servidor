@@ -1,6 +1,6 @@
 <?php
 include("conectar.php");
-include("estilos.html");
+include("estilos.php");
 ?>
 
 <!DOCTYPE html>
@@ -12,12 +12,58 @@ include("estilos.html");
     <title>Registro de Usuario</title>
     <link rel="stylesheet" href="estilos.css">
     <style>
-        
+        body {
+            background-color: white;
+            color: black;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid tan;
+            border-radius: 10px;
+            background-color: #f5f5f5;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid tan;
+            border-radius: 5px;
+        }
+
+        a {
+            color: brown;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .button {
+            background-color: brown;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
 <body>
-    <h2>Registro de Usuario</h2>
+    <h1>Registro de Usuario</h1>
     <form action="inscripcion.php" method="post">
         <label for="DNI">DNI:</label>
         <input type="text" id="DNI" name="DNI" required maxlength="9"><br><br>
@@ -74,7 +120,6 @@ include("estilos.html");
         <input type="text" id="especialidad" name="especialidad" required><br><br>
 
         <button type="submit">Registrarse</button>
-        <a href="index.html"><button type="button">Inicio</button></a>
     </form>
 
     <a href="acciones.php"><button class="button">Menu</button></a>

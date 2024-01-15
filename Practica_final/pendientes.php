@@ -1,6 +1,6 @@
 <?php
 include("conectar.php");
-include("estilos.html");
+include("estilos.php");
 
 // Supongamos que recibes el código del curso cerrado en el parámetro $_GET['codigo_curso_cerrado']
 $codigo_curso = $_GET['codigo'];

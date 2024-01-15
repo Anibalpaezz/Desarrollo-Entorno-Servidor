@@ -1,6 +1,6 @@
 <?php
 include("conectar.php");
-include("estilos.html");
+include("estilos.php");
 
 /* session_start();
 

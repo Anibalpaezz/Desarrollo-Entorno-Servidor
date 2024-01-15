@@ -1,6 +1,6 @@
 <?php
 include("conectar.php");
-include("estilos.html");
+include("estilos.php");
 
 session_start();
 if (!isset($_SESSION['usuario'])) {
@@ -18,7 +18,8 @@ $resultado_todos = mysqli_query($conexion, $todos);
 
 if ($_SESSION['permisos'] == 1) {
     if ($resultado_todos && mysqli_num_rows($resultado_todos) > 0) {
-        echo '<table border="1">
+        echo '<h1>Todos los cursos</h1>
+        <table border="1">
         <tr>
             <th>Código</th>
             <th>Nombre</th>
@@ -26,6 +27,7 @@ if ($_SESSION['permisos'] == 1) {
             <th>Número de Plazas</th>
             <th>Número de Solicitudes</th>
             <th>Plazo de Inscripción</th>
+            <th colspan="3">Acciones</th>
         </tr>';
 
         while ($row = mysqli_fetch_assoc($resultado_todos)) {
@@ -47,14 +49,15 @@ if ($_SESSION['permisos'] == 1) {
         echo '<a href="acciones.php"><button class="button">Menu</button></a>';
         echo '<a href="crear_curso.php"><button class="button">Crear curso</button></a>';
 
-        mysqli_free_result($result);
+        mysqli_free_result($resultado_todos);
         mysqli_close($conexion);
     } else {
         echo "<h1>No hay registros en la tabla Cursos</h1>";
     }
 } else {
     if ($resultado_disponibles && mysqli_num_rows($resultado_disponibles) > 0) {
-        echo '<table border="1">
+        echo '<h1>Todos los cursos</h1>
+        <table border="1">
         <tr>
             <th>Código</th>
             <th>Nombre</th>
@@ -80,7 +83,7 @@ if ($_SESSION['permisos'] == 1) {
 
         echo '<a href="acciones.php"><button class="button">Menu</button></a>';
 
-        mysqli_free_result($result);
+        mysqli_free_result($resultado_disponibles);
         mysqli_close($conexion);
     } else {
         echo "<h1>No hay registros en la tabla Cursos</h1>";
