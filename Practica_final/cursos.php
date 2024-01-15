@@ -45,6 +45,7 @@ if ($_SESSION['permisos'] == 1) {
         echo '</table>';
 
         echo '<a href="acciones.php"><button class="button">Menu</button></a>';
+        echo '<a href="crear_curso.php"><button class="button">Crear curso</button></a>';
 
         mysqli_free_result($result);
         mysqli_close($conexion);

@@ -61,6 +61,7 @@ if ($resultado_solicitantes && mysqli_num_rows($resultado_solicitantes) > 0) {
     echo "Solicitantes seleccionados y actualizados exitosamente.";
 } else {
     echo "No hay solicitantes para seleccionar o el curso ya está completo.";
+    echo '<a href="cursos.php"><button class="button">Volver</button></a>';
 }
 
 mysqli_close($conexion);
