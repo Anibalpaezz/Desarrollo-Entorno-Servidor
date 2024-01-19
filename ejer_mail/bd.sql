@@ -10,3 +10,6 @@ CREATE TABLE informacion (
     email VARCHAR(100),
     fecha_nac DATE,
 ) ENGINE=InnoDB;
+
+INSERT INTO informacion (nombre, direccion, CP, email, fecha_nac) VALUES ("anibal", "calle concha", 28300, "prxss@yahoo.com", "2003/11/07");
+
