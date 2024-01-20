@@ -58,11 +58,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             display: none;
         }
 
-        input[type="radio"]:checked+label {
+        input[type="radio"]:checked+#fotos {
             border: 2px solid blue;
         }
 
-        label {
+        #fotos {
             display: inline-block;
             cursor: pointer;
             margin: 5px;
@@ -102,7 +102,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #003300;
         }
 
-        label,
         #destinatario {
             display: inline-block;
             cursor: pointer;
@@ -110,53 +109,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 5px;
             border: 2px solid #ccc;
         }
-
-        #tabla {}
     </style>
 </head>
 
 <body>
     <h1>Envío de postales</h1>
-    <div id="tabla">
-        <table>
-            <tr>
-                <td>
-                    <input type="radio" name="opciones" id="opcion1">
-                    <label for="opcion1">
-                        <img src="fotos/<?php echo $tipo ?>/1.jpg" alt="">
-                    </label>
-                </td>
-                <td>
-                    <input type="radio" name="opciones" id="opcion2">
-                    <label for="opcion2">
-                        <img src="fotos/<?php echo $tipo ?>/2.jpg" alt="">
-                    </label>
-                </td>
-                <td>
-                    <input type="radio" name="opciones" id="opcion3">
-                    <label for="opcion3">
-                        <img src="fotos/<?php echo $tipo ?>/3.jpg" alt="">
-                    </label>
-                </td>
-                <td>
-                    <input type="radio" name="opciones" id="opcion4">
-                    <label for="opcion4">
-                        <img src="fotos/<?php echo $tipo ?>/4.jpg" alt="">
-                    </label>
-                </td>
-                <td>
-                    <input type="radio" name="opciones" id="opcion5">
-                    <label for="opcion5">
-                        <img src="fotos/<?php echo $tipo ?>/5.jpg" alt="">
-                    </label>
-                </td>
-            </tr>
-        </table>
-    </div>
-
-
-    <form action="" method="post">
-        <div id="select"> <label for="destinatario">Destinatario</label><select name="destinatario" id="destinatario">
+    <form action="envio.php" method="post">
+        <div id="tabla">
+            <table>
+                <tr>
+                    <td>
+                        <input type="radio" name="opciones" id="opcion1">
+                        <label id="fotos" for="opcion1">
+                            <img src="fotos/<?php echo $tipo ?>/1.jpg" alt="Foto de navidad">
+                        </label>
+                    </td>
+                    <td>
+                        <input type="radio" name="opciones" id="opcion2">
+                        <label id="fotos" for="opcion2">
+                            <img src="fotos/<?php echo $tipo ?>/2.jpg" alt="Foto de navidad">
+                        </label>
+                    </td>
+                    <td>
+                        <input type="radio" name="opciones" id="opcion3">
+                        <label id="fotos" for="opcion3">
+                            <img src="fotos/<?php echo $tipo ?>/3.jpg" alt="Foto de navidad">
+                        </label>
+                    </td>
+                    <td>
+                        <input type="radio" name="opciones" id="opcion4">
+                        <label id="fotos" for="opcion4">
+                            <img src="fotos/<?php echo $tipo ?>/4.jpg" alt="Foto de navidad">
+                        </label>
+                    </td>
+                    <td>
+                        <input type="radio" name="opciones" id="opcion5">
+                        <label id="fotos" for="opcion5">
+                            <img src="fotos/<?php echo $tipo ?>/5.jpg" alt="Foto de navidad">
+                        </label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="select">
+            <label for="destinatario">Destinatario</label><select name="destinatario" id="destinatario">
                 <?php
                 if ($correos->rowCount() > 0) {
                     foreach ($resultado_correos as $row) {
@@ -168,13 +164,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 $conexion = null;
                 ?>
-            </select></div>
-        <div id="mensaje">Mensaje: <input type="text" name="mensaje" id="mensaje"></div>
+            </select>
+        </div>
         <div id="tema">Tema: <input type="text" name="tema" id="tema"></div>
+        <div id="mensaje">Mensaje: <input type="text" name="mensaje" id="mensaje"></div>
+        <input type="hidden" name="src_foto_seleccionada" id="src_foto_seleccionada" value="">
         <div id="boton"><button type="submit">Enviar</button></div>
     </form>
 
-    <script></script>
+        <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Función para actualizar el campo oculto con el src de la foto seleccionada
+        function actualizarSrcFotoSeleccionada() {
+            var opciones = document.querySelectorAll('input[name="opciones"]');
+            for (var i = 0; i < opciones.length; i++) {
+                if (opciones[i].checked) {
+                    var srcFoto = opciones[i].nextElementSibling.querySelector('img').src;
+                    document.getElementById('src_foto_seleccionada').value = srcFoto;
+                    break;
+                }
+            }
+        }
+
+        // Asigna un evento onchange a cada opción para llamar a la función
+        var opciones = document.querySelectorAll('input[name="opciones"]');
+        for (var i = 0; i < opciones.length; i++) {
+            opciones[i].addEventListener('change', actualizarSrcFotoSeleccionada);
+        }
+    });
+
+    </script>
+
 </body>
 
 </html>
