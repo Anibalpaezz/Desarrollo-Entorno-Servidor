@@ -111,13 +111,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo 'Error al enviar el correo: ', $mail->ErrorInfo;
             }
         }
-        
-
-        
-        
-    /* } catch (Exception $e) {
-        echo 'Error al enviar el correo: ', $mail->ErrorInfo;
-    } */
 } else {
     header('location: index.html');
 }

@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 200px;
         }
 
-        button:hover{
+        button:hover {
             background-color: #003300;
         }
 
@@ -152,44 +152,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div id="select">
             <label for="destinatario">Destinatario</label>
-                <?php
-                if ($correos->rowCount() > 0) {
-                    foreach ($resultado_correos as $row) {
-                        echo "<input name='destinatario[]' id='destinatario' type='checkbox' value='" . htmlspecialchars($row["email"], ENT_QUOTES) . "'>" . htmlspecialchars($row["email"]);
-                    }
-                } else {
-                    echo "<option value=''>No hay opciones disponibles</option>";
+            <?php
+            if ($correos->rowCount() > 0) {
+                foreach ($resultado_correos as $row) {
+                    echo "<input name='destinatario[]' id='destinatario' type='checkbox' value='" . htmlspecialchars($row["email"], ENT_QUOTES) . "'>" . htmlspecialchars($row["email"]);
                 }
+            } else {
+                echo "<option value=''>No hay opciones disponibles</option>";
+            }
 
-                $conexion = null;
-                ?>
+            $conexion = null;
+            ?>
             </select>
         </div>
         <div id="tema">Tema: <input type="text" name="tema" id="tema"></div>
         <div id="mensaje">Mensaje: <input type="text" name="mensaje" id="mensaje"></div>
         <input type="hidden" name="src_foto_seleccionada" id="src_foto_seleccionada" value="">
-        <input type="hidden" name="tipo" id="tipo" value="'<?php echo $tipo?>'">
+        <input type="hidden" name="tipo" id="tipo" value="<?= $tipo ?>">
         <div id="boton"><button type="submit">Enviar</button></div>
     </form>
 
-        <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        function actualizarSrcFotoSeleccionada() {
-            var opciones = document.querySelectorAll('input[name="opciones"]');
-            for (var i = 0; i < opciones.length; i++) {
-                if (opciones[i].checked) {
-                    var srcFoto = opciones[i].nextElementSibling.querySelector('img').src;
-                    document.getElementById('src_foto_seleccionada').value = srcFoto;
-                    break;
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function actualizarSrcFotoSeleccionada() {
+                var opciones = document.querySelectorAll('input[name="opciones"]');
+                for (var i = 0; i < opciones.length; i++) {
+                    if (opciones[i].checked) {
+                        var srcFoto = opciones[i].nextElementSibling.querySelector('img').src;
+                        document.getElementById('src_foto_seleccionada').value = srcFoto;
+                        break;
+                    }
                 }
             }
-        }
 
-        var opciones = document.querySelectorAll('input[name="opciones"]');
-        for (var i = 0; i < opciones.length; i++) {
-            opciones[i].addEventListener('change', actualizarSrcFotoSeleccionada);
-        }
-    });
+            var opciones = document.querySelectorAll('input[name="opciones"]');
+            for (var i = 0; i < opciones.length; i++) {
+                opciones[i].addEventListener('change', actualizarSrcFotoSeleccionada);
+            }
+        });
 
     </script>
 
