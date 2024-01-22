@@ -97,8 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 200px;
         }
 
-        button:hover,
-        select:hover {
+        button:hover{
             background-color: #003300;
         }
 
@@ -152,11 +151,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </table>
         </div>
         <div id="select">
-            <label for="destinatario">Destinatario</label><select name="destinatario" id="destinatario">
+            <label for="destinatario">Destinatario</label>
                 <?php
                 if ($correos->rowCount() > 0) {
                     foreach ($resultado_correos as $row) {
-                        echo "<option value='" . htmlspecialchars($row["email"], ENT_QUOTES) . "'>" . htmlspecialchars($row["email"]) . "</option>";
+                        echo "<input name='destinatario[]' id='destinatario' type='checkbox' value='" . htmlspecialchars($row["email"], ENT_QUOTES) . "'>" . htmlspecialchars($row["email"]);
                     }
                 } else {
                     echo "<option value=''>No hay opciones disponibles</option>";
@@ -169,12 +168,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div id="tema">Tema: <input type="text" name="tema" id="tema"></div>
         <div id="mensaje">Mensaje: <input type="text" name="mensaje" id="mensaje"></div>
         <input type="hidden" name="src_foto_seleccionada" id="src_foto_seleccionada" value="">
+        <input type="hidden" name="tipo" id="tipo" value="'<?php echo $tipo?>'">
         <div id="boton"><button type="submit">Enviar</button></div>
     </form>
 
         <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Función para actualizar el campo oculto con el src de la foto seleccionada
         function actualizarSrcFotoSeleccionada() {
             var opciones = document.querySelectorAll('input[name="opciones"]');
             for (var i = 0; i < opciones.length; i++) {
@@ -186,7 +185,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        // Asigna un evento onchange a cada opción para llamar a la función
         var opciones = document.querySelectorAll('input[name="opciones"]');
         for (var i = 0; i < opciones.length; i++) {
             opciones[i].addEventListener('change', actualizarSrcFotoSeleccionada);

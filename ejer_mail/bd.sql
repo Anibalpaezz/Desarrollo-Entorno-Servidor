@@ -11,5 +11,7 @@ CREATE TABLE informacion (
     fecha_nac DATE,
 ) ENGINE=InnoDB;
 
-INSERT INTO informacion (nombre, direccion, CP, email, fecha_nac) VALUES ("anibal", "calle concha", 28300, "prxss@yahoo.com", "2003/11/07");
-
+INSERT INTO informacion (nombre, direccion, CP, email, fecha_nac) VALUES ("anibal", "calle concha", 28300, "prxss@yahoo.com", "2002/11/07");
+INSERT INTO informacion (nombre, direccion, CP, email, fecha_nac) VALUES ("justin", "calle concha", 28300, "justin@troyan.com", "2003/11/07");
+INSERT INTO informacion (nombre, direccion, CP, email, fecha_nac) VALUES ("nico", "calle concha", 28300, "nico@troyan.com", "2004/11/07");
+INSERT INTO informacion (nombre, direccion, CP, email, fecha_nac) VALUES ("pablo", "calle concha", 28300, "pablo@troyan.com", "2005/11/07");

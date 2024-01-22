@@ -5,16 +5,11 @@ ini_set('display_startup_errors', 1);
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $tipo = $_POST['tipo'];
     $nombreFotoSeleccionada = $_POST['src_foto_seleccionada'];
     $destinatario = $_POST['destinatario'];
     $asunto = $_POST['tema'];
     $mensaje = $_POST['mensaje'];
-
-
-    /* echo $asunto; */
-    /* echo $destinatario; */
-    /* echo $nombreFotoSeleccionada; */
-    /* echo $mensaje; */
 
 
     require "/var/www/html/ejer_mail/PHPMailer-master/src/PHPMailer.php";
@@ -23,29 +18,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     $smtpServidor = "localhost";
-    $smtpUsuario = "anibal@troyan";
-    $smtpClave = "nico1234";
+    $smtpUsuario = "nico@troyan";
+    $smtpClave = "nico";
     $smtpPuerto = 25;
 
     $mail = new PHPMailer();
 
-    /* require('/var/www/html/github/servidorphp/PHPMailer-master/src/PHPMailer.php');
-    require('/var/www/html/github/servidorphp/PHPMailer-master/src/SMTP.php');
-    $mail = new PHPMailer();
-    $mail->isSMTP();
-    $mail->Mailer = "SMTP";
-    $mail->SMTPAutoTLS = true;
-    $mail->isHTML(true);
-    $mail->Port = 25;
-    $mail->Host = "localhost";
-    $mail->SMTPAuth = true;
-    $mail->Username = "jefe@nicolas.com";
-    $mail->Password = "jefe";
-    $mail->From = "anibal@troyan.com;
-    $mail->FromName = "jefe";
-    $mail->Timeout = 30; */
-
-    /* try { */
         $mail->isSMTP();
         $mail->Mailer = "SMTP";
         $mail->SMTPAutoTLS = true;
@@ -53,25 +31,89 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->Port = 25;
         $mail->Host = "localhost";
         $mail->SMTPAuth = true;
-        $mail->Username = "anibal@troyan.com";
-        $mail->Password = "nico1234";
-        $mail->From = "anibal@troyan.com";
+        $mail->Username = "nico@troyan.com";
+        $mail->Password = "nico";
+        $mail->From = "nico@troyan.com";
         $mail->FromName = "yo";
 
 
-        $mail->addAddress("nico@troyan.com");
-        $mail->Subject = 'Probando';
-        $mail->Body = 'Hola';
-        
-
         
         
 
-        if ($mail->send()) {
-            echo 'Correo enviado correctamente.';
-        } else {
-            echo 'Error al enviar el correo: ', $mail->ErrorInfo;
+        foreach ($destinatario as $correos) {
+            $mail->ClearAddresses();
+            $mail->addAddress($correos);
+
+
+
+            $mail->Subject = 'Probando';
+        $mail->Body = '<!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Postal de Ejemplo</title>
+            <style>
+                body {
+                    font-family: "Arial", sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #f8f8f8;
+                }
+        
+                .postcard {
+                    max-width: 400px;
+                    margin: 20px auto;
+                    background-color: #fff;
+                    border-radius: 10px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    overflow: hidden;
+                }
+        
+                .postcard img {
+                    width: 100%;
+                    height: auto;
+                    border-radius: 10px 10px 0 0;
+                }
+        
+                .postcard .content {
+                    padding: 20px;
+                }
+        
+                .postcard h2 {
+                    color: #333;
+                }
+        
+                .postcard p {
+                    color: #666;
+                }
+            </style>
+        </head>
+        <body>
+        
+            <div class="postcard">
+                <img src="' . $nombreFotoSeleccionada .'" alt="Imagen de la postal">
+                <div class="content">
+                    <h2>' . $asunto .'</h2>
+                    <p>' . $mensaje . '</p>
+                </div>
+            </div>
+        
+        </body>
+        </html>
+        ';
+
+            if ($mail->send()) {
+                echo 'Correo enviado correctamente.';
+                echo $tipo;
+                
+            } else {
+                echo 'Error al enviar el correo: ', $mail->ErrorInfo;
+            }
         }
+        
+
+        
         
     /* } catch (Exception $e) {
         echo 'Error al enviar el correo: ', $mail->ErrorInfo;
