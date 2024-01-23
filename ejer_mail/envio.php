@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $smtpServidor = "localhost";
     $smtpUsuario = "nico@troyan";
-    $smtpClave = "nico";
+    $smtpClave = "nico1234";
     $smtpPuerto = 25;
 
     $mail = new PHPMailer();
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->Host = "localhost";
         $mail->SMTPAuth = true;
         $mail->Username = "nico@troyan.com";
-        $mail->Password = "nico";
+        $mail->Password = "nico1234";
         $mail->From = "nico@troyan.com";
         $mail->FromName = "yo";
 
