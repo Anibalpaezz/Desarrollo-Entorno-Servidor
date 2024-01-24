@@ -26,7 +26,7 @@ CREATE TABLE cesta (
     cesta_ID INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(50),
     fecha_creacion DATE,
-    FOREIGN KEY (email) REFERENCES clientes(email)
+    FOREIGN KEY (email) REFERENCES clientes(email) ON DELETE NO ACTION
 ) ENGINE = InnoDB;
 
 
@@ -35,8 +35,8 @@ CREATE TABLE item_cesta (
     cesta_ID INT,
     producto_ID INT,
     cantidad INT,
-    FOREIGN KEY (cesta_ID) REFERENCES cesta(cesta_ID),
-    FOREIGN KEY (producto_ID) REFERENCES productos(producto_ID)
+    FOREIGN KEY (cesta_ID) REFERENCES cesta(cesta_ID) ON DELETE CASCADE,
+    FOREIGN KEY (producto_ID) REFERENCES productos(producto_ID) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 
@@ -47,7 +47,7 @@ CREATE TABLE pedidos (
     fecha_entrega DATE,
     total_pedido INT,
     entregado BOOLEAN,
-    FOREIGN KEY (email) REFERENCES clientes(email)
+    FOREIGN KEY (email) REFERENCES clientes(email) ON DELETE NO ACTION
 ) ENGINE = InnoDB;
 
 
@@ -56,6 +56,6 @@ CREATE TABLE item_pedido (
     pedido_ID INT,
     producto_ID INT,
     unidades INT,
-    FOREIGN KEY (pedido_ID) REFERENCES pedidos(pedido_ID),
-    FOREIGN KEY (producto_ID) REFERENCES productos(producto_ID)
+    FOREIGN KEY (pedido_ID) REFERENCES pedidos(pedido_ID) ON DELETE CASCADE,
+    FOREIGN KEY (producto_ID) REFERENCES productos(producto_ID) ON DELETE CASCADE
 ) ENGINE = InnoDB;
