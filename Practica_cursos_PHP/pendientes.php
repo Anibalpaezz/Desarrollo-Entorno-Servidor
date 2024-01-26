@@ -39,10 +39,8 @@ $numero_iterador = "SELECT numeroplazas FROM cursos WHERE codigo = $codigo_curso
 $resultado_iterador = mysqli_query($conexion, $numero_iterador);
 $plazas_disponibles = mysqli_fetch_assoc($resultado_iterador)['numeroplazas'];
 
-$solicitantes = "SELECT s.dni, s.codigocurso, s.fechasolicitud, s.admitido, 
-COUNT(*) AS total_admitido FROM solicitudes s
-INNER JOIN solicitantes st ON s.dni = st.dni 
-WHERE s.codigocurso = $codigo_curso GROUP BY st.dni 
+$solicitantes = "SELECT s.dni, s.codigocurso, s.fechasolicitud, s.admitido, COUNT(*) AS total_admitido FROM solicitudes s
+INNER JOIN solicitantes st ON s.dni = st.dni WHERE s.codigocurso = $codigo_curso GROUP BY st.dni 
 ORDER BY CASE WHEN st.dni IN (SELECT dni FROM solicitudes WHERE codigocurso != $codigo_curso) THEN 1 ELSE 0 END,
 total_admitido DESC, st.puntos DESC;";
 
@@ -62,11 +60,11 @@ if ($resultado_solicitantes && mysqli_num_rows($resultado_solicitantes) > 0) {
         }
     }
 
-    echo "Solicitantes seleccionados y actualizados exitosamente.";
+    echo "<p>Solicitantes seleccionados y actualizados exitosamente.</p>";
     echo '<a href="cursos.php"><button class="button">Volver</button></a>';
 
 } else {
-    echo "No hay solicitantes para seleccionar o el curso ya está completo.";
+    echo "<p>No hay solicitantes para seleccionar o el curso ya está completo.</p>";
     echo '<a href="cursos.php"><button class="button">Volver</button></a>';
 }
 
@@ -106,4 +104,4 @@ foreach ($solicitantes_seleccionados as $dni) {
 header("Location: pagina_destino");
 exit; */
 
-?> */
+?>

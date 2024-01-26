@@ -24,7 +24,8 @@ $valor = $_SESSION['permisos'];
 </head>
 
 <body>
-    <h2>Solicitud de curso</h2>
+<div id="contenido">
+    <h1>Solicitud de curso</h1>
     <form action="inscripcion.php" method="post">
         <label for="DNI">DNI:</label>
         <input type="text" id="DNI" name="DNI" required maxlength="9"><br><br>
@@ -88,6 +89,8 @@ $valor = $_SESSION['permisos'];
     </form>
 
     <a href="acciones.php"><button class="button">Menu</button></a>
+
+</div>
 </body>
 
 </html>
