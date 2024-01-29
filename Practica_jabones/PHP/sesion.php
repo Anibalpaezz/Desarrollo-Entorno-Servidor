@@ -1,6 +1,9 @@
 <?php
 include("conexion.php");
 
+session_start();
+
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["usuario"])) {
         $usuario = $_POST["usuario"];
@@ -22,7 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     function nombre($usuario)
     {
-        $patron_nombre = '/^[A-Za-z\s]+$/';
+        $patron_nombre = '/^[A-Zasession_start();
+        -z\s]+$/';
 
         return preg_match($patron_nombre, $usuario);
     }
@@ -40,6 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($resultado) {
                 echo "bien correo";
                 header("Location: jabones.php");
+                $_SESSION['usuario'] = $usuario;
+                $_SESSION['carrito'] = array();
             } else {
                 echo "mal correo";
                 header("Location: ../index.html");
@@ -60,6 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($resultado) {
                 echo "bien user";
                 header("Location: jabones.php");
+                $_SESSION['usuario'] = $usuario;
+                $_SESSION['carrito'] = array();
             } else {
                 echo "mal user";
                 header("Location: ../index.html");

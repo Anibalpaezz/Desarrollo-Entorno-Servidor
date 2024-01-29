@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['usuario'])){
+    header('Location: ../index.html');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,26 +12,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Jabones</title>
-    <style>
-        .soap-box {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 5px;
-            width: 100px;
-            height: 110px;
-            text-align: center;
-            display: inline-block;
-        }
-
-        .soap-image {
-            max-width: 100px;
-            height: 75px;
-        }
-    </style>
+    <link rel="stylesheet" href="../CSS/jabones.css">
 </head>
 
 <body>
 
+<div id="contenedor-jabones">
+<nav>
+    <a href=""><button>Cerrar sesion</button></a>
+    <a href=""><button>Ver carrito</button></a>
+    <a href="cerrar_sesion.php"><button>Cerrar sesion</button></a>
+</nav>
+    <h1>Listado de productos</h1>
+    
     <?php
     include("conexion.php");
 
@@ -52,6 +52,7 @@
 
     $conexion = null;
     ?>
+    </div>
 
 </body>
 

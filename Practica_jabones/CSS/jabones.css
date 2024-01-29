@@ -1,0 +1,26 @@
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#contenedor-jabones{
+    margin: 0;
+    text-align: center;
+    width: 50%;
+}
+
+.soap-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 5px;
+    width: 100px;
+    height: 110px;
+    text-align: center;
+    display: inline-block;
+}
+
+.soap-image {
+    max-width: 100px;
+    height: 75px;
+}
