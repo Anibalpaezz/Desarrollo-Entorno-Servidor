@@ -40,6 +40,14 @@ CREATE TABLE item_cesta (
     FOREIGN KEY (producto_ID) REFERENCES productos(producto_ID) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
+CREATE TABLE item_pedido (
+    item_pedido_ID INT AUTO_INCREMENT PRIMARY KEY,
+    pedido_ID INT,
+    producto_ID INT,
+    unidades INT,
+    FOREIGN KEY (pedido_ID) REFERENCES pedidos(pedido_ID) ON DELETE CASCADE,
+    FOREIGN KEY (producto_ID) REFERENCES productos(producto_ID) ON DELETE CASCADE
+) ENGINE = InnoDB;
 
 CREATE TABLE pedidos (
     pedido_ID INT AUTO_INCREMENT PRIMARY KEY,
@@ -52,14 +60,6 @@ CREATE TABLE pedidos (
 ) ENGINE = InnoDB;
 
 
-CREATE TABLE item_pedido (
-    item_pedido_ID INT AUTO_INCREMENT PRIMARY KEY,
-    pedido_ID INT,
-    producto_ID INT,
-    unidades INT,
-    FOREIGN KEY (pedido_ID) REFERENCES pedidos(pedido_ID) ON DELETE CASCADE,
-    FOREIGN KEY (producto_ID) REFERENCES productos(producto_ID) ON DELETE CASCADE
-) ENGINE = InnoDB;
 
 CREATE TABLE administradores (
     ID INT auto_increment primary key,

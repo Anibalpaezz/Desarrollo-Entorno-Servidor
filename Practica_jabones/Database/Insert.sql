@@ -31,6 +31,12 @@ INSERT INTO clientes (email, pass, nombre, direccion, CP, telefono) VALUES
 ('maria@maria.com', 'nico', 'María', 'Avenida 456', 67890, '234567890'),
 ('pedro@pedro.com', 'nico', 'Pedro', 'Plaza 789', 54321, '345678901');
 
+INSERT INTO pedidos (email, fecha_pedido, fecha_entrega, total_pedido, entregado)
+VALUES 
+('carlos@carlos.com', CURDATE() - INTERVAL 1 DAY, CURDATE() - INTERVAL 1 DAY, 1, FALSE),
+('carlos@carlos.com', CURDATE() - INTERVAL 1 DAY, CURDATE() - INTERVAL 1 DAY, 1, FALSE);
+
+
 
 
 
