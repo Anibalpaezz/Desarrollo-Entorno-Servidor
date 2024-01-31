@@ -1,13 +1,20 @@
-body{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+#navegacion{
+    text-align: center;
+    margin: 10px;
 }
 
-#contenedor-jabones{
+#navegacion, button {
+    border-radius: 5px;
+}
+
+#jabones-caja{
     margin: 0;
     text-align: center;
     width: 50%;
+}
+
+#portada {
+    max-width: 100%;
 }
 
 .soap-box {
@@ -24,3 +31,4 @@ body{
     max-width: 100px;
     height: 75px;
 }
+

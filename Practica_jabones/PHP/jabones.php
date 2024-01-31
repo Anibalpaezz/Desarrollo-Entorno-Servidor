@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['usuario'])){
+if (!isset($_SESSION['usuario'])) {
     header('Location: ../index.html');
 }
 ?>
@@ -16,42 +16,45 @@ if(!isset($_SESSION['usuario'])){
 </head>
 
 <body>
+    <nav id="navegacion">
+        <a href=""><button>Cerrar sesion</button></a>
+        <a href=""><button>Ver carrito</button></a>
+        <a href="cerrar_sesion.php"><button>Cerrar sesion</button></a>
+    </nav>
+    <div class="portada-cont">
+        <img id="portada" src="../Images/portada.png" alt="Foto de portada">
+    </div>
 
-<div id="contenedor-jabones">
-<nav>
-    <a href=""><button>Cerrar sesion</button></a>
-    <a href=""><button>Ver carrito</button></a>
-    <a href="cerrar_sesion.php"><button>Cerrar sesion</button></a>
-</nav>
-    <h1>Listado de productos</h1>
-    
-    <?php
-    include("conexion.php");
+    <h1>Bienvenido a ENJABON-(ARTE)</h1>
+    <div id="jabones-caja">
 
-    try {
-        $consulta = "SELECT * FROM productos";
-        $resultado = $conexion->prepare($consulta);
-        $resultado->execute();
+        <?php
+        include("conexion.php");
 
-        if ($resultado->rowCount() > 0) {
-            while ($row = $resultado->fetch(PDO::FETCH_ASSOC)) {
-                echo '<a href="mostrar_jabon.php?id=' . $row['producto_ID'] . '" class="soap-link">';
-                echo '<div class="soap-box">';
-                echo '<img src="' . $row['imagen'] . '" alt="' . $row['nombre'] . '" class="soap-image"><br>';
-                echo '<strong>' . $row['nombre'] . '</strong><br>';
-                echo '</div>';
-                echo '</a>';
+        try {
+            $consulta = "SELECT * FROM productos";
+            $resultado = $conexion->prepare($consulta);
+            $resultado->execute();
+
+            if ($resultado->rowCount() > 0) {
+                while ($row = $resultado->fetch(PDO::FETCH_ASSOC)) {
+                    echo '<a href="mostrar_jabon.php?id=' . $row['producto_ID'] . '" class="soap-link">';
+                    echo '<div class="soap-box">';
+                    echo '<img src="' . $row['imagen'] . '" alt="' . $row['nombre'] . '" class="soap-image"><br>';
+                    echo '<strong>' . $row['nombre'] . '</strong><br>';
+                    echo '</div>';
+                    echo '</a>';
+                }
+
+            } else {
+                echo "No se encontraron jabones en la base de datos.";
             }
-
-        } else {
-            echo "No se encontraron jabones en la base de datos.";
+        } catch (PDOException $e) {
+            echo "Error al ejecutar la consulta: " . $e->getMessage();
         }
-    } catch (PDOException $e) {
-        echo "Error al ejecutar la consulta: " . $e->getMessage();
-    }
 
-    $conexion = null;
-    ?>
+        $conexion = null;
+        ?>
     </div>
 
 </body>
