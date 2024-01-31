@@ -1,12 +1,13 @@
 <?php
+//Conecto los estilos y la conexion
 include("conectar.php");
 include("estilos.php");
 
+//Verifico que la sesion esta creada
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header('Location: index.html');
 }
-
 
 /* session_start();
 
@@ -18,6 +19,7 @@ if (!isset($_SESSION['usuario']) || !isset($_SESSION['permisos'])) {
 $usuario = $_SESSION['usuario'];
 $valor = $_SESSION['permisos']; */
 
+//Se procesan los datos si se llega por post
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $dni = $_POST["DNI"];
     $apellidos = $_POST["apellidos"];
@@ -42,6 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $especialidad = $_POST["especialidad"];
 
+    //Calculo de puntos
     $puntos = 0;
     if ($ctic == 1) {
         $puntos += 4;
@@ -65,6 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $puntos += 1;
     }
 
+    //Creo un solicitante nuevo
     $insercion = "INSERT INTO solicitantes (dni, apellidos, nombre, telefono, correo, pass, codigocentro, coordinadortic, grupotic, nombregrupo, pbilin, nombrecargo, situacion, fechanac, especialidad, puntos) 
             VALUES ('$dni', '$apellidos', '$nombre', '$telefono', '$correo', '$pass', '$cod_centro', $ctic, $gtic, '$grupo', $ingles, '$n_cargo', '$situacion', '$tiempo', '$especialidad', '$puntos')";
 
@@ -86,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             Situacion: $situacion <br>
             ";
 
-            echo '<a href="acciones.php"><button class="button">Menu</button></a>';
+        echo '<a href="acciones.php"><button class="button">Menu</button></a>';
 
     } else {
         echo "Error en el registro no se ha introducido algun parametro valor" . mysqli_error($conexion);

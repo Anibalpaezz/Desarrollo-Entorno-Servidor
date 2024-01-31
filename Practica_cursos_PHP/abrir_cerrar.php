@@ -1,8 +1,10 @@
 <?php
+//Conecto los estilos y la conexion
 include("conectar.php");
 include("estilos.php");
 
-if(isset($_GET['codigo'])) {
+//Comprueblo si se selecciona alguna curso
+if (isset($_GET['codigo'])) {
     $codigo = $_GET['codigo'];
     $abrir = $_GET['abrir'];
     $cerrar = $_GET['cerrar'];
@@ -10,6 +12,7 @@ if(isset($_GET['codigo'])) {
     $codigo_curso = "SELECT * FROM cursos WHERE codigo = $codigo";
     $resultado_codigo = mysqli_query($conexion, $codigo_curso);
 
+    //Compruebo si existe el curso y lo abro o cierro en cuestion
     if ($resultado_codigo && mysqli_num_rows($resultado_codigo) > 0) {
         if ($abrir) {
             $abrir_curso = "UPDATE cursos SET abierto = true WHERE codigo = $codigo";

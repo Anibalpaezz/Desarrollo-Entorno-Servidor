@@ -1,7 +1,9 @@
 <?php
+//Conecto los estilos y la conexion
 include("conectar.php");
 include("estilos.php");
 
+//Verifico si la sesion existe
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header('Location: index.html');
@@ -16,6 +18,7 @@ $todos = "SELECT * FROM cursos";
 $resultado_disponibles = mysqli_query($conexion, $disponibles);
 $resultado_todos = mysqli_query($conexion, $todos);
 
+//Verifico si eres administrador o solicitante y genero la tabla correspondiente
 if ($_SESSION['permisos'] == 1) {
     if ($resultado_todos && mysqli_num_rows($resultado_todos) > 0) {
         echo '<div id="contenido">';

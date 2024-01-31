@@ -1,10 +1,11 @@
 <?php
-
+//Conecto los estilos y la conexion
 include("conectar.php");
 include("estilos.php");
 
+//Compruebo que esta iniciada la sesion
 session_start();
-if(!isset($_SESSION['usuario'])){
+if (!isset($_SESSION['usuario'])) {
     header('Location: index.html');
 }
 
@@ -14,6 +15,7 @@ $valor = $_SESSION['permisos'];
 echo '<div id="contenido">';
 echo "<h2>Bienvenido, " . $_SESSION['usuario'] . "!</h2>";
 
+//Genero las acciones posibles
 if ($_SESSION['permisos'] == 1) {
     echo '<a href="cursos.php"><button type="button">Todos los cursos</button></a>';
     echo '<a href="solicitud.php"><button type="button">Crear solicitante</button></a>';

@@ -1,4 +1,5 @@
 <?php
+//Conecto los estilos y la conexion
 include("conectar.php");
 include("estilos.php");
 ?>

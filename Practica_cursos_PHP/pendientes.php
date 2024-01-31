@@ -1,8 +1,9 @@
 <?php
+//Conecto los estilos y la conexion
 include("conectar.php");
 include("estilos.php");
 
-// Supongamos que recibes el código del curso cerrado en el parámetro $_GET['codigo_curso_cerrado']
+//Saco el codigo del curso
 $codigo_curso = $_GET['codigo'];
 
 /* $numero_iterador = "SELECT numeroplazas FROM cursos WHERE codigo = $codigo_curso";
@@ -34,11 +35,12 @@ if ($resultado_solicitantes && mysqli_num_rows($resultado_solicitantes) > 0) {
 
 mysqli_close($conexion); */
 
-
+//Numero de plazas
 $numero_iterador = "SELECT numeroplazas FROM cursos WHERE codigo = $codigo_curso";
 $resultado_iterador = mysqli_query($conexion, $numero_iterador);
 $plazas_disponibles = mysqli_fetch_assoc($resultado_iterador)['numeroplazas'];
 
+//Reviso los cursos en los que se esta inscrito y ordeno por no-cursos y luego por puntos
 $solicitantes = "SELECT s.dni, s.codigocurso, s.fechasolicitud, s.admitido, COUNT(*) AS total_admitido FROM solicitudes s
 INNER JOIN solicitantes st ON s.dni = st.dni WHERE s.codigocurso = $codigo_curso GROUP BY st.dni 
 ORDER BY CASE WHEN st.dni IN (SELECT dni FROM solicitudes WHERE codigocurso != $codigo_curso) THEN 1 ELSE 0 END,
@@ -48,6 +50,7 @@ $resultado_solicitantes = mysqli_query($conexion, $solicitantes);
 
 $num_plazas_asignadas = 0;
 
+//Si la consulta devuelve filas se repite este while segundo el numero de plazas
 if ($resultado_solicitantes && mysqli_num_rows($resultado_solicitantes) > 0) {
     while ($fila = mysqli_fetch_assoc($resultado_solicitantes)) {
         if ($num_plazas_asignadas < $plazas_disponibles) {

@@ -1,4 +1,5 @@
 <?php
+//Script de borrado de sesion
 session_start();
 
 session_unset();

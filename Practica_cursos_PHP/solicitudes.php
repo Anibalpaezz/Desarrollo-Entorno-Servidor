@@ -1,7 +1,9 @@
 <?php
+//Conecto los estilos y la conexion
 include("conectar.php");
 include("estilos.php");
 
+//Verifico si se ha creado la sesion
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header('Location: index.html');
@@ -10,6 +12,7 @@ if (!isset($_SESSION['usuario'])) {
 $solicitudes = "SELECT * FROM solicitudes";
 $resultado_solicitudes = mysqli_query($conexion, $solicitudes);
 
+//Genero una lista de las solicitudes
 if ($resultado_solicitudes) {
     echo '<div id="contenido">';
     echo '<h1>Lista de Solicitudes</h1>

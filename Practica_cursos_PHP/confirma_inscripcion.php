@@ -1,16 +1,21 @@
 <?php
+//Conecto los estilos y la conexion
 include("conectar.php");
 include("estilos.php");
 
+//Compruebo que esta iniciado la sesion
 session_start();
-if(!isset($_SESSION['usuario'])){
+if (!isset($_SESSION['usuario'])) {
     header('Location: index.html');
 }
 
 $usuario = $_SESSION['usuario'];
 $valor = $_SESSION['permisos'];
+
+//Compruebo la fecha actual
 $fecha_solicitud = (new DateTime('now'))->format('Y-m-d');
 
+//Verifico que se ha seleccionado un curso
 if (isset($_GET['codigo'])) {
     $codigo = $_GET['codigo'];
 
@@ -26,9 +31,11 @@ if (isset($_GET['codigo'])) {
     die('Código de curso no proporcionado');
 }
 
+//Selecciono datos del solicitante
 $dni_nombre = "SELECT dni FROM solicitantes WHERE nombre = '$usuario'";
 $resultado_dni = mysqli_query($conexion, $dni_nombre);
 
+//Si existe el solicitante se realiza su inscripcion
 if ($row = mysqli_fetch_assoc($resultado_dni)) {
     $dni = $row['dni'];
 
