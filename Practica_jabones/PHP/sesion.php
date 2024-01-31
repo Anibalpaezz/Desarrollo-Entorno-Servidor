@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             if ($resultado) {
                 echo "bien correo";
-                header("Location: jabones.php");
+                header("Location: productos-login.php");
                 $_SESSION['usuario'] = $usuario;
                 $_SESSION['carrito'] = array();
             } else {
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             if ($resultado) {
                 echo "bien user";
-                header("Location: jabones.php");
+                header("Location: productos-login.php");
                 $_SESSION['usuario'] = $usuario;
                 $_SESSION['carrito'] = array();
             } else {

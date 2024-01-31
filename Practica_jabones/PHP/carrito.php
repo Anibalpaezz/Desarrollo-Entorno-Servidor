@@ -1,0 +1,112 @@
+<?php
+include("conexion.php");
+
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header('Location: ../index.html');
+}
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $producto = $_POST["producto"];
+    $cantidad = $_POST["cantidad"];
+
+    /* echo $producto;
+    echo $cantidad; */
+
+    $dia_actual = (new DateTime('now'))->format('Y-m-d');
+    /* echo $dia_actual; */
+
+
+    $inser_cesta = $conexion->prepare("INSERT INTO cesta (email, fecha_creacion) VALUES (:usuario, :fecha_creacion)");
+    $inser_cesta->bindParam(':usuario', $_SESSION['usuario']);
+    $inser_cesta->bindParam(':fecha_creacion', $dia_actual);
+
+    if ($inser_cesta->execute()) {
+        $cesta_id = $conexion->prepare("SELECT cesta_ID FROM cesta WHERE email = :usuario");
+        $cesta_id->bindParam(":usuario", $_SESSION['usuario']);
+
+        if ($cesta_id->execute()) {
+            $resul_cesta_id = $cesta_id->fetchColumn();
+
+            $inser_item_cesta = $conexion->prepare("INSERT INTO item_cesta (cesta_ID, producto_ID, cantidad) VALUES (:cesta_ID, :producto, :cantidad)");
+            $inser_item_cesta->bindParam(':cesta_ID', $resul_cesta_id);
+            $inser_item_cesta->bindParam(':producto', $producto);
+            $inser_item_cesta->bindParam(':cantidad', $cantidad);
+
+            if ($inser_item_cesta->execute()) {
+                header('Location: carrito.php?producto=' . urlencode($producto));
+            } else {
+                echo "mal final";
+            }
+        }
+    } else {
+        echo "Error en insertar a cesta: " . $inser_cesta->errorInfo()[2];
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+    <link rel="stylesheet" href="../CSS/jabones.css">
+</head>
+
+<body>
+    <h1>Carrito de
+        <?php echo $_SESSION['usuario'] ?>
+    </h1>
+    <?php
+    if (isset($_GET['producto'])) {
+        $productoId = $_GET['producto'];
+
+        $produc_carrito = $conexion->prepare("SELECT nombre, precio, imagen FROM productos INNER JOIN item_cesta ON productos.producto_ID = item_cesta.producto_ID WHERE productos.producto_ID = :producto");
+        $produc_carrito->bindParam(':producto', $productoId);
+        $produc_carrito->execute();
+
+        if ($produc_carrito->rowCount() > 0) {
+
+            while ($row = $produc_carrito->fetch(PDO::FETCH_ASSOC)) {
+                echo '<h2>Los siguientes productos se añadieron a su cesta</h2>';
+                echo '<a href="mostrar_jabon.php?id=' . $row['producto_ID'] . '" class="soap-link">';
+                echo '<div class="soap-box">';
+                echo '<img src="' . $row['imagen'] . '" alt="' . $row['nombre'] . '" class="soap-image"><br>';
+                echo '<strong>' . $row['nombre'] . " " . $row['precio'] . "$" . '</strong><br>';
+                echo '</div>';
+                echo '</a>';
+            }
+
+        } else {
+            echo "No se encontraron jabones en la base de datos.";
+        }
+    } else {
+        $produc_carrito = $conexion->prepare("SELECT nombre, precio, imagen FROM productos INNER JOIN item_cesta ON productos.producto_ID = item_cesta.producto_ID inner join cesta on item_cesta.cesta_ID = cesta.cesta_ID where email = :usuario");
+        $produc_carrito->bindParam(':usuario', $_SESSION['usuario']);
+        $produc_carrito->execute();
+
+        if ($produc_carrito->rowCount() > 0) {
+            while ($row = $produc_carrito->fetch(PDO::FETCH_ASSOC)) {
+                echo '<a href="mostrar_jabon.php?id=' . $row['producto_ID'] . '" class="soap-link">';
+                echo '<div class="soap-box">';
+                echo '<img src="' . $row['imagen'] . '" alt="' . $row['nombre'] . '" class="soap-image"><br>';
+                echo '<strong>' . $row['nombre'] . " " . $row['precio'] . "$" . '</strong><br>';
+                echo '</div>';
+                echo '</a>';
+            }
+
+        } else {
+            echo "No se encontraron jabones en la base de datos.";
+        }
+    }
+    ?>
+    <div>
+        <a href="productos-login.php"><button>Seguir comprando</button></a>
+        <a href="comprar.php"><button>Finalizar compra</button></a>
+    </div>
+
+</body>
+
+</html>

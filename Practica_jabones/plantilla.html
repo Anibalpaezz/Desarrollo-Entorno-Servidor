@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .total {
+            font-weight: bold;
+        }
+
+        input[readonly] {
+            border: none;
+            background-color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Factura</h2>
+
+    <table>
+        <tr>
+            <th>Número de Factura</th>
+            <td><input type="text" id="numeroFactura"></td>
+        </tr>
+        <tr>
+            <th>Fecha</th>
+            <td><input type="text" id="fecha"></td>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <td><input type="text" id="nombre"></td>
+        </tr>
+        <tr>
+            <th>Dirección</th>
+            <td><input type="text" id="direccion"></td>
+        </tr>
+        <tr>
+            <th>Precio</th>
+            <td><input type="text" id="precio"></td>
+        </tr>
+        <tr>
+            <th>Impuestos</th>
+            <td><input type="text" id="impuestos"></td>
+        </tr>
+        <tr class="total">
+            <th>Precio Total</th>
+            <td><input type="text" id="precioTotal" readonly></td>
+        </tr>
+    </table>
+
+</body>
+
+</html>

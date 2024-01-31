@@ -31,10 +31,11 @@ if ($id) {
 
     // Modifica el formulario según la cantidad de productos comprados
     /* echo $totalCompras; */
-    echo '<form action="añadir_carrito.php" method="post">';
-    echo '<input type="number" id="numero" name="numero" min="0" max="' . ($totalCompras == 2 ? 0 : ($totalCompras == 1 ? 1 : 2)) . '" step="1">';
+    echo '<form action="carrito.php" method="post">';
+    echo '<input type="number" name="cantidad" id="numero" name="numero" min="0" max="' . ($totalCompras == 2 ? 0 : ($totalCompras == 1 ? 1 : 2)) . '" step="1">';
+    echo '<input type="hidden" name="producto" value="'.$id.'">';
+    echo '<button type="submit">Comprar</button>';
     echo '</form>';
-    echo '<a href="añadir_carrito.php"><button>Comprar</button></a>';
 } else {
     echo 'ID no proporcionado.';
 }
