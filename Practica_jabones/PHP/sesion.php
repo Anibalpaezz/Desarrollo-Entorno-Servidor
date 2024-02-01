@@ -16,15 +16,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     /* echo $usuario;
     echo $pass; */
 
-    function correo($usuario)
-    {
+    function correo($usuario) {
         $patron_correo = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/';
 
         return preg_match($patron_correo, $usuario);
     }
 
-    function nombre($usuario)
-    {
+    function nombre($usuario) {
         $patron_nombre = '/^[A-Zasession_start();
         -z\s]+$/';
 
@@ -69,8 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION['usuario'] = $usuario;
                 $_SESSION['carrito'] = array();
             } else {
-                echo "mal user";
-                header("Location: ../index.html");
+                echo $error_message = "Credenciales no válidas. Inténtalo de nuevo.";
+                /* include("../index.html"); */
             }
         } catch (PDOException $e) {
             die("Error en la consulta: " . $e->getMessage());

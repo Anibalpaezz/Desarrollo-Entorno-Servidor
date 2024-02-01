@@ -21,6 +21,7 @@ INSERT INTO productos (nombre, descripcion, peso, precio, imagen) VALUES
 ('Jabón de Cúrcuma', 'Propiedades antiinflamatorias y revitalizantes', 140, 12, '../Images/curcuma.jpg'),
 ('Jabón de Jazmín', 'Aroma floral y cuidado para la piel', 150, 14, '../Images/jazmin.jpg'),
 ('Jabón de Sal Marina', 'Exfoliación y remineralización', 160, 15, '../Images/sal_marina.jpg');
+UPDATE productos SET precio = 8.75 WHERE precio <> 8.75;
 
 INSERT INTO administradores (usuario, pass) VALUES
 ('anibal', 'nico'),
@@ -31,10 +32,10 @@ INSERT INTO clientes (email, pass, nombre, direccion, CP, telefono) VALUES
 ('maria@maria.com', 'nico', 'María', 'Avenida 456', 67890, '234567890'),
 ('pedro@pedro.com', 'nico', 'Pedro', 'Plaza 789', 54321, '345678901');
 
-INSERT INTO pedidos (email, fecha_pedido, fecha_entrega, total_pedido, entregado)
+/* INSERT INTO pedidos (email, fecha_pedido, fecha_entrega, total_pedido, entregado)
 VALUES 
 ('carlos@carlos.com', CURDATE() - INTERVAL 1 DAY, CURDATE() - INTERVAL 1 DAY, 1, FALSE),
-('carlos@carlos.com', CURDATE() - INTERVAL 1 DAY, CURDATE() - INTERVAL 1 DAY, 1, FALSE);
+('carlos@carlos.com', CURDATE() - INTERVAL 1 DAY, CURDATE() - INTERVAL 1 DAY, 1, FALSE); */
 
 
 
