@@ -9,38 +9,72 @@ if (!isset($_SESSION['usuario'])) {
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $producto = $_POST["producto"];
     $cantidad = $_POST["cantidad"];
-
-    /* echo $producto;
-    echo $cantidad; */
-
-    $dia_actual = (new DateTime('now'))->format('Y-m-d');
-    /* echo $dia_actual; */
-
-
-    $inser_cesta = $conexion->prepare("INSERT INTO cesta (email, fecha_creacion) VALUES (:usuario, :fecha_creacion)");
-    $inser_cesta->bindParam(':usuario', $_SESSION['usuario']);
-    $inser_cesta->bindParam(':fecha_creacion', $dia_actual);
-
-    if ($inser_cesta->execute()) {
-        $cesta_id = $conexion->prepare("SELECT cesta_ID FROM cesta WHERE email = :usuario");
-        $cesta_id->bindParam(":usuario", $_SESSION['usuario']);
-
-        if ($cesta_id->execute()) {
-            $resul_cesta_id = $cesta_id->fetchColumn();
-
-            $inser_item_cesta = $conexion->prepare("INSERT INTO item_cesta (cesta_ID, producto_ID, cantidad) VALUES (:cesta_ID, :producto, :cantidad)");
-            $inser_item_cesta->bindParam(':cesta_ID', $resul_cesta_id);
-            $inser_item_cesta->bindParam(':producto', $producto);
-            $inser_item_cesta->bindParam(':cantidad', $cantidad);
-
-            if ($inser_item_cesta->execute()) {
-                header('Location: carrito.php?producto=' . urlencode($producto));
-            } else {
-                echo "mal final";
-            }
-        }
+    if ($cantidad == 0) {
+        echo "<h2>Solo puedes comprar 2 jabones por mes si quieres mas vete a Zara Home";
     } else {
-        echo "Error en insertar a cesta: " . $inser_cesta->errorInfo()[2];
+
+
+
+        $dia_actual = (new DateTime('now'))->format('Y-m-d');
+
+        $cesta_unica = $conexion->prepare("SELECT email FROM cesta where email like :usuario");
+        $cesta_unica->bindParam(":usuario", $_SESSION['usuario']);
+
+        if ($cesta_unica->execute()) {
+            if ($cesta_unica->rowCount() > 0) {
+                $cesta_id = $conexion->prepare("SELECT cesta_ID FROM cesta WHERE email = :usuario");
+                $cesta_id->bindParam(":usuario", $_SESSION['usuario']);
+
+                if ($cesta_id->execute()) {
+                    $resul_cesta_id = $cesta_id->fetchColumn();
+
+                    $inser_item_cesta = $conexion->prepare("INSERT INTO item_cesta (cesta_ID, producto_ID, cantidad) VALUES (:cesta_ID, :producto, :cantidad)");
+                    $inser_item_cesta->bindParam(':cesta_ID', $resul_cesta_id);
+                    $inser_item_cesta->bindParam(':producto', $producto);
+                    $inser_item_cesta->bindParam(':cantidad', $cantidad);
+
+                    if ($inser_item_cesta->execute()) {
+                        header('Location: carrito.php?producto=' . urlencode($producto));
+                    } else {
+                        echo "Error al ejecutar insert en item cesta";
+                    }
+                } else {
+                    echo "Error en la consulta de cesta id.";
+                }
+            } else if ($cesta_unica->rowCount() == 0) {
+                $inser_cesta = $conexion->prepare("INSERT INTO cesta (email, fecha_creacion) VALUES (:usuario, :fecha_creacion)");
+                $inser_cesta->bindParam(':usuario', $_SESSION['usuario']);
+                $inser_cesta->bindParam(':fecha_creacion', $dia_actual);
+
+                if ($inser_cesta->execute()) {
+                    $cesta_id = $conexion->prepare("SELECT cesta_ID FROM cesta WHERE email = :usuario");
+                    $cesta_id->bindParam(":usuario", $_SESSION['usuario']);
+
+                    if ($cesta_id->execute()) {
+                        $resul_cesta_id = $cesta_id->fetchColumn();
+
+                        $inser_item_cesta = $conexion->prepare("INSERT INTO item_cesta (cesta_ID, producto_ID, cantidad) VALUES (:cesta_ID, :producto, :cantidad)");
+                        $inser_item_cesta->bindParam(':cesta_ID', $resul_cesta_id);
+                        $inser_item_cesta->bindParam(':producto', $producto);
+                        $inser_item_cesta->bindParam(':cantidad', $cantidad);
+
+                        if ($inser_item_cesta->execute()) {
+                            header('Location: carrito.php?producto=' . urlencode($producto));
+                        } else {
+                            echo "mal final";
+                        }
+                    } else {
+                        echo "Error en la consulta de cesta id.";
+                    }
+                } else {
+                    echo "Error en insertar a cesta: " . $inser_cesta->errorInfo()[2];
+                }
+            } else {
+                echo "Error en la devolucion de campos";
+            }
+        } else {
+            echo "Error en la consulta de cesta unica";
+        }
     }
 }
 ?>
@@ -80,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
 
         } else {
-            echo "No se encontraron jabones en la base de datos.";
+            echo 'Error en la muestra del carrito';
         }
     } else {
         $produc_carrito = $conexion->prepare("SELECT nombre, precio, imagen FROM productos INNER JOIN item_cesta ON productos.producto_ID = item_cesta.producto_ID inner join cesta on item_cesta.cesta_ID = cesta.cesta_ID where email = :usuario");

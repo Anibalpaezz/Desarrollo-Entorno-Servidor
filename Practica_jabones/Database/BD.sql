@@ -59,9 +59,6 @@ CREATE TABLE item_pedido (
     FOREIGN KEY (producto_ID) REFERENCES productos(producto_ID) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
-
-
-
 CREATE TABLE administradores (
     ID INT auto_increment primary key,
     usuario varchar(50),

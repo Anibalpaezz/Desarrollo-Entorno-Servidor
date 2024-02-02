@@ -9,49 +9,61 @@ if (!isset($_SESSION['usuario'])) {
 $id = isset($_GET['id']) ? $_GET['id'] : null;
 
 if ($id) {
-    // Consulta para obtener la información del producto
-    $consultaProducto = $conexion->prepare("SELECT * FROM productos WHERE producto_ID = ?");
-    $consultaProducto->bindParam(1, $id);
-    $consultaProducto->execute();
-    $row = $consultaProducto->fetch(PDO::FETCH_ASSOC);
+    $consulta_producto = $conexion->prepare("SELECT * FROM productos WHERE producto_ID = ?");
+    $consulta_producto->bindParam(1, $id);
+    $consulta_producto->execute();
+    $row = $consulta_producto->fetch(PDO::FETCH_ASSOC);
 
-    // Consulta para verificar las compras del cliente en los últimos 30 días
-    $fechaLimite = date('Y-m-d', strtotime('-30 days'));
-    $consultaCompras = $conexion->prepare("SELECT COUNT(*) as totalCompras FROM pedidos WHERE email = ? AND fecha_pedido >= ?");
-    $consultaCompras->bindParam(1, $_SESSION['usuario']); // Ajusta el campo según tu estructura de base de datos
-    $consultaCompras->bindParam(2, $fechaLimite);
-    $consultaCompras->execute();
-    $resultadoCompras = $consultaCompras->fetch(PDO::FETCH_ASSOC);
-    $totalCompras = $resultadoCompras['totalCompras'];
+    $consulta_compras = $conexion->prepare("SELECT SUM(unidades) FROM item_pedido INNER JOIN pedidos ON item_pedido.pedido_ID = pedidos.pedido_ID WHERE pedidos.email = :usuario AND pedidos.fecha_pedido >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)");
+    $consulta_compras->bindParam(":usuario", $_SESSION['usuario']);
 
-    // Muestra la información del producto
-    echo '<h1>' . $row['nombre'] . '</h1>';
-    echo '<img src="' . $row['imagen'] . '" alt="' . $row['nombre'] . '">';
-    echo '<p>' . $row['descripcion'] . '</p>';
+    if ($consulta_compras->execute()) {
+        $resultado_compras = $consulta_compras->fetchColumn();
 
-    // Modifica el formulario según la cantidad de productos comprados
-    /* echo $totalCompras; */
-    echo '<form action="carrito.php" method="post">';
-    echo '<input type="number" name="cantidad" id="numero" name="numero" min="0" max="' . ($totalCompras == 2 ? 0 : ($totalCompras == 1 ? 1 : 2)) . '" step="1">';
-    echo '<input type="hidden" name="producto" value="'.$id.'">';
-    echo '<button type="submit">Comprar</button>';
-    echo '</form>';
+        $consulta_cesta = $conexion->prepare("SELECT SUM(cantidad) FROM item_cesta INNER JOIN cesta ON item_cesta.cesta_ID = cesta.cesta_ID WHERE email = :usuario");
+        $consulta_cesta->bindParam(":usuario", $_SESSION['usuario']);
+
+        if ($consulta_cesta->execute()) {
+            $resultado_cesta = $consulta_cesta->fetchColumn();
+
+            echo '<h1>' . $row['nombre'] . '</h1>';
+            echo '<img src="' . $row['imagen'] . '" alt="' . $row['nombre'] . '">';
+            echo '<p>' . $row['descripcion'] . '</p>';
+
+            /* echo $totalCompras; */
+            echo '<form action="carrito.php" method="post">';
+            echo '<input type="number" name="cantidad" id="numero" name="numero" min="0" max="' . ($resultado_compras || $resultado_cesta == 2 ? 0 : ($resultado_compras == 1 && $resultado_cesta == 0 ? 1 : ($resultado_compras == 0 && $resultado_cesta == 1 ? 1 : ($resultado_compras == 1 && $resultado_cesta == 1 ? 0 : 2)))) . '" step="1">';
+            echo '<input type="hidden" name="producto" value="' . $id . '">';
+            echo '<button type="submit">Comprar</button>';
+            echo '</form>';
+        } else {
+            echo "Error en la consulta de la cesta";
+        }
+    } else {
+        echo "Error en consulta de las compras";
+    }
+
 } else {
-    echo 'ID no proporcionado.';
+    echo 'ID incorrecto.';
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $row['nombre'] ?></title>
+    <title>
+        <?php echo $row['nombre'] ?>
+    </title>
     <link rel="stylesheet" href="../CSS/mostrar_jabon.css">
 </head>
+
 <body>
-<!-- <form action="añadir_carrito.php" method="post">
+    <!-- <form action="añadir_carrito.php" method="post">
     <input type="number" id="numero" name="numero" min="1" max="2" step="1">
     </form>
     <a href="añadir_carrito.php"><button>Comprar</button></a> -->
 </body>
+
 </html>
