@@ -17,7 +17,7 @@ if (!isset($_SESSION['usuario'])) {
 
 <body>
     <nav id="navegacion">
-        <a href=""><button>Cerrar sesion</button></a>
+        <a href=""><button></button></a>
         <a href=""><button>Ver carrito</button></a>
         <a href="cerrar_sesion.php"><button>Cerrar sesion</button></a>
     </nav>

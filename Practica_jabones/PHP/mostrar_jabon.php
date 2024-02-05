@@ -57,6 +57,9 @@ if ($id) {
         <?php echo $row['nombre'] ?>
     </title>
     <link rel="stylesheet" href="../CSS/mostrar_jabon.css">
+    <style>
+        
+    </style>
 </head>
 
 <body>

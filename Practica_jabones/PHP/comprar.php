@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
             if ($pedido_id->execute()) {
                 $id = $pedido_id->fetchColumn();
 
-                $item_pedido = $conexion->prepare("INSERT INTO item_pedido (pedido_ID, producto_ID, unidades) SELECT :id, producto_ID, COUNT(producto_ID) FROM item_cesta INNER JOIN cesta ON item_cesta.cesta_ID = cesta.cesta_ID WHERE email = :usuario GROUP BY producto_ID");
+                $item_pedido = $conexion->prepare("INSERT INTO item_pedido (pedido_ID, producto_ID, unidades) SELECT :id, producto_ID, SUM(cantidad) FROM item_cesta INNER JOIN cesta ON item_cesta.cesta_ID = cesta.cesta_ID WHERE email = :usuario GROUP BY producto_ID");
                 $item_pedido->bindParam(":id", $id);
                 $item_pedido->bindParam(":usuario", $_SESSION['usuario']);
 
@@ -41,6 +41,12 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                     $borrar_cesta->bindParam(":usuario", $_SESSION['usuario']);
 
                     if ($borrar_cesta->execute()) {
+                        require('pdf.php');
+
+                        $pdf = new PDF();
+                        $pdf->generatePDF();
+                        $pdfContent = $pdf->Output('', 'S');
+
                         require("../Mail/src/PHPMailer.php");
                         require("../Mail/src/SMTP.php");
 
@@ -65,7 +71,12 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                         $mail->FromName = "Jaboneria Scarlatti";
                         $mail->addAddress("justin@troyan.com");
 
-                        $mail->Body = "hola";
+                        /* $mail->setFrom('your-email@example.com', 'Your Name');
+                        $mail->addAddress('recipient@example.com', 'Recipient Name'); */
+
+                        $mail->Body = "Copia de la factura generada automaticamente";
+
+                        $mail->addStringAttachment($pdfContent, 'Factura.pdf');
 
                         if ($mail->send()) {
                             echo 'Correo enviado correctamente.';

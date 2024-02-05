@@ -12,9 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($cantidad == 0) {
         echo "<h2>Solo puedes comprar 2 jabones por mes si quieres mas vete a Zara Home";
     } else {
-
-
-
         $dia_actual = (new DateTime('now'))->format('Y-m-d');
 
         $cesta_unica = $conexion->prepare("SELECT email FROM cesta where email like :usuario");
@@ -139,6 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div>
         <a href="productos-login.php"><button>Seguir comprando</button></a>
         <a href="comprar.php"><button>Finalizar compra</button></a>
+        <a href="borra_carrito.php"><button>Eliminar del carrito</button></a>
     </div>
 
 </body>
