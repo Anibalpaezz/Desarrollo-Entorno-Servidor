@@ -36,7 +36,45 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                 $item_pedido->bindParam(":usuario", $_SESSION['usuario']);
 
                 if ($item_pedido->execute()) {
-                    echo "todo bien";
+                    /* echo "todo bien"; */
+                    $borrar_cesta = $conexion->prepare("DELETE FROM cesta WHERE email = :usuario");
+                    $borrar_cesta->bindParam(":usuario", $_SESSION['usuario']);
+
+                    if ($borrar_cesta->execute()) {
+                        require("../Mail/src/PHPMailer.php");
+                        require("../Mail/src/SMTP.php");
+
+                        $smtpServidor = "localhost";
+                        $smtpUsuario = "nico@troyan";
+                        $smtpClave = "nico";
+                        $smtpPuerto = 25;
+
+                        $mail = new PHPMailer();
+
+                        $mail->isSMTP();
+                        $mail->Mailer = "SMTP";
+                        $mail->SMTPAutoTLS = true;
+                        $mail->isHTML(true);
+                        $mail->Port = 25;
+                        $mail->Host = "localhost";
+                        $mail->SMTPAuth = true;
+                        $mail->Username = "nico@troyan.com";
+                        $mail->Password = "nico";
+                        $mail->From = "nico@troyan.com";
+                        $mail->Subject = "Factura simplificada";
+                        $mail->FromName = "Jaboneria Scarlatti";
+                        $mail->addAddress("justin@troyan.com");
+
+                        $mail->Body = "hola";
+
+                        if ($mail->send()) {
+                            echo 'Correo enviado correctamente.';
+                        } else {
+                            echo 'Error al enviar el correo: ', $mail->ErrorInfo;
+                        }
+                    } else {
+                        echo "Error en el borrado de cesta";
+                    }
                 } else {
                     echo "Error en la insercion a item pedido";
                 }
