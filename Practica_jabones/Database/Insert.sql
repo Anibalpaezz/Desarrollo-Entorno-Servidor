@@ -1,5 +1,6 @@
 use jaboneria;
 
+/* Insertando valores */
 INSERT INTO productos (nombre, descripcion, peso, precio, imagen) VALUES
 ('Jabon de Glicerina', 'Limpieza suave para todo tipo de piel', 150, 5, '../Images/glicerina.jpg'),
 ('Jabon de Aloe Vera', 'Hidratacion y regeneracion cutanea', 120, 7, '../Images/aloe_vera.jpg'),
@@ -24,15 +25,18 @@ INSERT INTO productos (nombre, descripcion, peso, precio, imagen) VALUES
 
 UPDATE productos SET precio = 8.75 WHERE precio <> 8.75;
 
+/* Insertando valores */
 INSERT INTO administradores (usuario, pass) VALUES
 ('anibal', 'nico'),
 ('nico', 'nico');
 
+/* Insertando valores */
 INSERT INTO clientes (email, pass, nombre, direccion, CP, telefono) VALUES
 ('carlos@carlos.com', 'nico', 'Carlos', 'Calle 123', 12345, '123456789'),
 ('maria@maria.com', 'nico', 'María', 'Avenida 456', 67890, '234567890'),
 ('pedro@pedro.com', 'nico', 'Pedro', 'Plaza 789', 54321, '345678901');
 
+/* Insertando valores */
 /* INSERT INTO pedidos (email, fecha_pedido, fecha_entrega, total_pedido, entregado)
 VALUES 
 ('carlos@carlos.com', CURDATE() - INTERVAL 1 DAY, CURDATE() - INTERVAL 1 DAY, 1, FALSE),

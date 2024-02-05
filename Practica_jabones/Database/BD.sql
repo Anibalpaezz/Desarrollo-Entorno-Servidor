@@ -1,8 +1,10 @@
+/* Creacion de la base de datos */
 DROP DATABASE IF EXISTS jaboneria;
 CREATE DATABASE IF NOT EXISTS jaboneria CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 use jaboneria;
 
+/* Creacion de tablas */
 CREATE TABLE clientes (
     email VARCHAR(50) PRIMARY KEY,
     pass varchar(50),
@@ -12,7 +14,7 @@ CREATE TABLE clientes (
     telefono VARCHAR(12)
 ) ENGINE = InnoDB;
 
-
+/* Creacion de tablas */
 CREATE TABLE productos (
     producto_ID INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(30),
@@ -22,7 +24,7 @@ CREATE TABLE productos (
     imagen VARCHAR(50)
 ) ENGINE = InnoDB;
 
-
+/* Creacion de tablas */
 CREATE TABLE cesta (
     cesta_ID INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(50),
@@ -30,7 +32,7 @@ CREATE TABLE cesta (
     FOREIGN KEY (email) REFERENCES clientes(email) ON DELETE NO ACTION
 ) ENGINE = InnoDB;
 
-
+/* Creacion de tablas */
 CREATE TABLE item_cesta (
     item_cesta_ID INT AUTO_INCREMENT PRIMARY KEY,
     cesta_ID INT,
@@ -40,6 +42,7 @@ CREATE TABLE item_cesta (
     FOREIGN KEY (producto_ID) REFERENCES productos(producto_ID) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
+/* Creacion de tablas */
 CREATE TABLE pedidos (
     pedido_ID INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(50),
@@ -50,6 +53,7 @@ CREATE TABLE pedidos (
     FOREIGN KEY (email) REFERENCES clientes(email) ON DELETE NO ACTION
 ) ENGINE = InnoDB;
 
+/* Creacion de tablas */
 CREATE TABLE item_pedido (
     item_pedido_ID INT AUTO_INCREMENT PRIMARY KEY,
     pedido_ID INT,
@@ -59,6 +63,7 @@ CREATE TABLE item_pedido (
     FOREIGN KEY (producto_ID) REFERENCES productos(producto_ID) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
+/* Creacion de tablas */
 CREATE TABLE administradores (
     ID INT auto_increment primary key,
     usuario varchar(50),

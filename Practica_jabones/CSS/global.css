@@ -1,9 +1,19 @@
+/* Fuentes utilizadas en la pagina */
 @import url('https://fonts.googleapis.com/css2?family=Honk&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+
+* {
+    font-family: 'Lilita One', sans-serif;
+    font-weight: 10;
+    background-color: rgb(67, 104, 80);
+}
 
 button {
-    background-image: linear-gradient(to right, #ffadcf 0%, #ffc4ad  51%, #ffedad  100%);
+    font-size: 16px;
+    background-image: linear-gradient(to right, #7eb293 0%, #9f979c 51%, #b878a4 100%);
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
@@ -18,4 +28,52 @@ button {
 
 button:hover {
     background-position: right center;
+}
+
+input {
+    background-color: rgb(251, 250, 218);
+    border-radius: 5px;
+    border-color: rgb(18, 55, 42);
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+label {
+    background-color: rgb(173, 188, 159);
+    font-size: 20px;
+    color: rgb(18, 55, 42);
+    display: block;
+    margin-bottom: 8px;
+}
+
+h1 {
+    font-size: 50px;
+    color: rgb(251, 250, 218);
+    text-align: center;
+}
+
+form {
+    background-color: rgb(173, 188, 159);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+#contenido,
+div {
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: rgb(251, 250, 218);
 }
