@@ -28,6 +28,9 @@ body {
     height: 150px;
     text-align: center;
     display: inline-block;
+    background-color: #ebfeff;
+    border-radius: 5px;
+    border-color: rgb(18, 55, 42);
 }
 
 .soap-image {
@@ -39,7 +42,7 @@ body {
 #jabones-caja {
     margin: 0;
     text-align: center;
-    width: 50%;
+    width: 100%;
 }
 
 /* Cover Styles */

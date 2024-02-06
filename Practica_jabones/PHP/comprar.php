@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
                         $pdf = new PDF();
                         $pdf->generatePDF();
-                        $pdfContent = $pdf->Output('', 'S');
+                        $pdf->Output('../PDF/' . $aleatorio_factura, 'S');
 
                         require("../Mail/src/PHPMailer.php");
                         require("../Mail/src/SMTP.php");
@@ -76,7 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
                         $mail->Body = "Copia de la factura generada automaticamente";
 
-                        $mail->addStringAttachment($pdfContent, 'Factura.pdf');
+                        /* $ruta = '../PDF/' . $aleatorio_factura; */
+                        $mail->addStringAttachment('../PDF/' . $aleatorio_factura, 'Factura' . $aleatorio_factura . '.pdf');
 
                         if ($mail->send()) {
                             echo 'Correo enviado correctamente.';

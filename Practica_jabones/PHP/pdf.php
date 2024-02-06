@@ -97,7 +97,4 @@ class PDF extends FPDF {
         }
     }
 }
-
-$pdf = new PDF();
-$pdf->generatePDF();
 ?>
