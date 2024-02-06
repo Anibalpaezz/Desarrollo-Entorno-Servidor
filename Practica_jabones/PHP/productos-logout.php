@@ -1,3 +1,10 @@
+<?php
+/* session_start();
+if (!isset($_SESSION['usuario'])) {
+    header('Location: ../index.html');
+} */
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,50 +12,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Jabones</title>
-    <link rel="stylesheet" href="CSS/global.css">
-    <style>
-        .soap-box {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px;
-            width: 110px;
-            text-align: center;
-            display: inline-block;
-        }
-
-        .soap-image {
-            max-width: 100px;
-            height: 75px;
-        }
-    </style>
+    <link rel="stylesheet" href="../CSS/global.css">
+    <link rel="stylesheet" href="../CSS/productos-login.css">
 </head>
 
 <body>
+    <nav class="navegacion">
+        <a href="../index.html"><button>Iniciar sesion</button></a>
+        <a href="../index.html"><button>Menu</button></a>
+        <a href="registro.php"><button>Registrarse</button></a>
+    </nav>
+    <div class="portada-cont">
+        <img class="portada" src="../Images/portada.png" alt="Foto de portada">
+    </div>
 
-    <?php
-    include("conectar.php");
+    <h1>Bienvenido a ENJABON-(ARTE)</h1>
+    <h2>35% de descuento en la primera compra</h2>
+    <div class="jabones-caja">
 
-    try {
-        $sql = "SELECT * FROM productos";
-        $stmt = $conexion->prepare($sql);
-        $stmt->execute();
+        <?php
+        include("conexion.php");
 
-        if ($stmt->rowCount() > 0) {
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo '<div class="soap-box">';
-                echo '<img src="' . $row['imagen'] . '" alt="' . $row['nombre'] . '" class="soap-image"><br>';
-                echo '<strong>' . $row['nombre'] . '</strong><br>';
-                echo '</div>';
+        try {
+            $consulta = "SELECT * FROM productos";
+            $resultado = $conexion->prepare($consulta);
+            $resultado->execute();
+
+            if ($resultado->rowCount() > 0) {
+                while ($row = $resultado->fetch(PDO::FETCH_ASSOC)) {
+                    echo '<a href="mostrar_jabon.php?id=' . $row['producto_ID'] . '">';
+                    echo '<div class="soap-box">';
+                    echo '<img src="' . $row['imagen'] . '" alt="' . $row['nombre'] . '" class="soap-image"><br>';
+                    echo '<strong>' . $row['nombre'] . '</strong><br>';
+                    echo '</div>';
+                    echo '</a>';
+                }
+
+            } else {
+                echo "No se encontraron jabones en la base de datos.";
             }
-        } else {
-            echo "No se encontraron jabones en la base de datos.";
+        } catch (PDOException $e) {
+            echo "Error al ejecutar la consulta: " . $e->getMessage();
         }
-    } catch (PDOException $e) {
-        echo "Error al ejecutar la consulta: " . $e->getMessage();
-    }
-    
-    $conexion = null;
-    ?>
+
+        $conexion = null;
+        ?>
+    </div>
 
 </body>
 

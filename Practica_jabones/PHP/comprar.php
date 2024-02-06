@@ -8,11 +8,25 @@ if (!isset($_SESSION['usuario'])) {
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
-    $coste = $conexion->prepare("SELECT sum(precio) FROM productos INNER JOIN item_cesta ON productos.producto_ID = item_cesta.producto_ID INNER JOIN cesta ON item_cesta.cesta_ID = cesta.cesta_ID WHERE email = :usuario");
+    $coste = $conexion->prepare("SELECT SUM(productos.precio * item_cesta.cantidad) FROM productos INNER JOIN item_cesta ON productos.producto_ID = item_cesta.producto_ID INNER JOIN cesta ON item_cesta.cesta_ID = cesta.cesta_ID WHERE email = :usuario;");
     $coste->bindParam(":usuario", $_SESSION['usuario']);
 
     if ($coste->execute()) {
-        $suma = $coste->fetchColumn();
+        $primera_compra = $conexion->prepare("SELECT email FROM pedidos WHERE email = :usuario");
+        $primera_compra->bindParam(":usuario", $_SESSION["usuario"]);
+
+        if ($primera_compra->execute()) {
+            if ($primera_compra->rowCount() == 0) {
+                $precio_original = $coste->fetchColumn();
+                $descuento = $precio_original * 0.35;
+                $suma = $precio_original - $descuento;
+                number_format($suma, 2);
+            } else {
+                $suma = $coste->fetchColumn();
+            }
+        } else {
+            echo "Error al sacar si es primera compra";
+        }
 
         $fecha_actual = (new DateTime('now'))->format('Y-m-d');
         $fecha_prevista = (new DateTime('now'))->add(new DateInterval('P5D'))->format('Y-m-d');
@@ -47,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                         $pdf->generatePDF();
                         $pdf->Output('../PDF/' . $aleatorio_factura, 'S');
 
-                        require("../Mail/src/PHPMailer.php");
+                        /* require("../Mail/src/PHPMailer.php");
                         require("../Mail/src/SMTP.php");
 
                         $smtpServidor = "localhost";
@@ -71,19 +85,31 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                         $mail->FromName = "Jaboneria Scarlatti";
                         $mail->addAddress("justin@troyan.com");
 
-                        /* $mail->setFrom('your-email@example.com', 'Your Name');
-                        $mail->addAddress('recipient@example.com', 'Recipient Name'); */
+                        $mail->setFrom('your-email@example.com', 'Your Name');
+                        $mail->addAddress('recipient@example.com', 'Recipient Name');
 
                         $mail->Body = "Copia de la factura generada automaticamente";
 
-                        /* $ruta = '../PDF/' . $aleatorio_factura; */
                         $mail->addStringAttachment('../PDF/' . $aleatorio_factura, 'Factura' . $aleatorio_factura . '.pdf');
 
                         if ($mail->send()) {
                             echo 'Correo enviado correctamente.';
                         } else {
                             echo 'Error al enviar el correo: ', $mail->ErrorInfo;
-                        }
+                        } */
+
+                        /* require ("correos.php");
+
+                        $asunto = "Factura simplificada";
+                        $cuerpo = "Copia de la factura generada automáticamente";
+                        $destinatario = "justin@troyan.com";
+                        $rutaAdjunto = '../PDF/' . $aleatorio_factura . '.pdf';
+
+                        if (enviarmail($asunto, $cuerpo, $destinatario, $rutaAdjunto)) {
+                            echo 'Correo enviado correctamente.';
+                        } else {
+                            echo 'Error al enviar el correo.';
+                        } */
                     } else {
                         echo "Error en el borrado de cesta";
                     }

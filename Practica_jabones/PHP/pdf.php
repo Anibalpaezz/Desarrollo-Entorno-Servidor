@@ -1,8 +1,10 @@
 <?php
 require('../PDF/Generador/fpdf.php');
 
-class PDF extends FPDF {
-    function Header() {
+class PDF extends FPDF
+{
+    function Header()
+    {
         $this->SetFont('Arial', 'B', 28);
         $this->Cell(50, 10, 'Jaboneria Scarlatti', 0, 0);
         $this->Image('../Logo/IES logo.png', 180, 5, 20);
@@ -10,13 +12,15 @@ class PDF extends FPDF {
         $this->Ln(20);
     }
 
-    function Footer() {
+    function Footer()
+    {
         $this->SetY(-15);
         $this->SetFont('Arial', 'I', 8);
         $this->Cell(0, 10, 'Gracias por confiar en nosotros', 0, 0, 'C');
     }
 
-    function generatePDF() {
+    function generatePDF()
+    {
         include("conexion.php");
         $consulta_nombre = $conexion->prepare("SELECT nombre FROM clientes WHERE email = :usuario");
         $consulta_nombre->bindParam(':usuario', $_SESSION['usuario']);
@@ -26,7 +30,7 @@ class PDF extends FPDF {
 
             $consulta_dir = $conexion->prepare("SELECT direccion FROM clientes WHERE email = :usuario");
             $consulta_dir->bindParam(':usuario', $_SESSION['usuario']);
-            
+
 
             if ($consulta_dir->execute()) {
                 $resultado_dir = $consulta_dir->fetchColumn();
@@ -38,6 +42,7 @@ class PDF extends FPDF {
                     $resultado_coste = $consulta_coste->fetchColumn();
 
                     $subtotal = $resultado_coste;
+                    $subtotal = number_format($subtotal, 2);
                     $IVA = $subtotal * 0.21;
                     $IVA = number_format($IVA, 2);
                     $gestion = $subtotal / 10;
@@ -67,7 +72,23 @@ class PDF extends FPDF {
                         while ($row = $articulos->fetch(PDO::FETCH_ASSOC)) {
                             $this->Cell(50, 10, $row['nombre'], 1, 0);
                             $this->Cell(40, 10, $row['unidades'], 1, 0);
-                            $this->Cell(40, 10, '$' . number_format($row['precio'], 2), 1, 1);
+
+                            $primera_compra = $conexion->prepare("SELECT email FROM pedidos WHERE email = :usuario");
+                            $primera_compra->bindParam(":usuario", $_SESSION["usuario"]);
+
+                            if ($primera_compra->execute()) {
+                                if ($primera_compra->rowCount() == 1) {
+                                    $precio_original = $row['precio'];
+                                    $descuento = $precio_original * 0.35;
+                                    $final = $precio_original - $descuento;
+                                    number_format($suma, 2);
+                                    $this->Cell(40, 10, number_format($final, 2), 1, 1);
+                                } else {
+                                    $this->Cell(40, 10, number_format($row['precio'], 2), 1, 1);
+                                }
+                            } else {
+                                echo "Error al sacar si es primera compra";
+                            }
                         }
 
                         $this->Cell(50, 10, 'Subtotal', 1, 0);
@@ -91,7 +112,7 @@ class PDF extends FPDF {
                 }
             } else {
                 echo "Error al obtener la direccion del cliente";
-            }       
+            }
         } else {
             echo "Error al obtener el nombre del cliente";
         }

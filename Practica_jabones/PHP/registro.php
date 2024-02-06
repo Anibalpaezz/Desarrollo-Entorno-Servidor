@@ -8,7 +8,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $emailError = "Formato de correo electrónico no válido";
     }
+
     $pass = $_POST['pass'];
+    if (strlen($pass) < 2) {
+        $passError = "La contraseña debe tener como minimo 2 caracteres";
+    }
+
     $nombre = $_POST['nombre'];
     $direccion = $_POST['direccion'];
 
@@ -58,35 +63,69 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuario</title>
-    <link rel="stylesheet" href="CSS/global.css">
-    <link rel="stylesheet" href="../CSS/registro.css">
+    <link rel="stylesheet" href="../CSS/global.css">
+    <style>
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            background: none;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+            background: none;
+        }
+    </style>
 </head>
 
 <body>
     <div id="contenido">
         <h1>Registro de Usuario</h1>
         <form action="registro.php" method="post">
-            <label for="email">Correo electronico</label>
-            <span class="error"><?php echo $emailError; ?></span>
-            <input type="text" id="email" name="email" maxlength=""><br><br>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="email">Correo electrónico:</label>
+                    <input type="text" id="email" name="email" maxlength="">
+                    <span class="error">
+                        <?php echo $emailError; ?>
+                    </span>
+                </div>
 
-            <label for="pass">Contraseña</label>
-            <input type="password" id="pass" name="pass"><br><br>
+                <div class="form-group">
+                    <label for="pass">Contraseña:</label>
+                    <input type="password" id="pass" name="pass">
+                    <span class="error">
+                        <?php echo $passError; ?>
+                    </span>
+                </div>
 
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" name="nombre"><br><br>
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre">
+                </div>
 
-            <label for="direccion">Direccion</label>
-            <input type="text" id="direccion" name="direccion"><br><br>
+                <div class="form-group">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" id="direccion" name="direccion">
+                </div>
 
-            <label for="CP">Codigo Postal</label>
-            <span class="error"><?php echo $cpError; ?></span>
-            <input type="text" id="CP" name="CP"><br><br>
+                <div class="form-group">
+                    <label for="CP">Código Postal:</label>
+                    <input type="text" id="CP" name="CP">
+                    <span class="error">
+                        <?php echo $cpError; ?>
+                    </span>
+                </div>
 
-            <label for="telefono">Telefono:</label>
-            <span class="error"><?php echo $telefonoError; ?></span>
-            <input type="text" id="telefono" name="telefono" maxlength="12"><br><br>
-            
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" maxlength="12">
+                    <span class="error">
+                        <?php echo $telefonoError; ?>
+                    </span>
+                </div>
+            </div>
 
             <button type="submit">Registrarse</button>
         </form>

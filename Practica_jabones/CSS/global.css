@@ -1,8 +1,4 @@
 /* Fuentes utilizadas en la pagina */
-@import url('https://fonts.googleapis.com/css2?family=Honk&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
 
 * {
@@ -50,8 +46,12 @@ label {
 }
 
 h1 {
-    font-size: 50px;
+    font-size: 49px;
     color: rgb(251, 250, 218);
+    text-align: center;
+}
+
+h2 {
     text-align: center;
 }
 
@@ -64,7 +64,6 @@ form {
     margin: 20px auto;
 }
 
-#contenido,
 div {
     text-align: center;
 }
@@ -72,9 +71,19 @@ div {
 a{
     text-decoration: none;
     color: #3f1850;
+    background: none;
 }
 
 a:hover {
     text-decoration: underline;
     color: rgb(251, 250, 218);
+    text-shadow: 0 0 3px black, 0 0 5px black;
+}
+
+span {
+    background: none;
+}
+
+.error {
+    color: red;
 }

@@ -56,7 +56,7 @@ if ($id) {
     <title>
         <?php echo $row['nombre'] ?>
     </title>
-    <link rel="stylesheet" href="CSS/global.css">
+    <link rel="stylesheet" href="../CSS/global.css">
     <link rel="stylesheet" href="../CSS/mostrar_jabon.css">
     <style>
         

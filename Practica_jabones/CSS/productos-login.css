@@ -1,0 +1,69 @@
+/* Navigation Styles */
+.navegacion {
+    text-align: center;
+    padding: 8px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+/* Soap Box Styles */
+.soap-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 5px;
+    width: 240px;
+    height: 210px;
+    text-align: center;
+    display: inline-block;
+    background-color: rgb(173, 188, 159);
+    border-radius: 5px;
+}
+
+.soap-image {
+    max-width: 180px;
+    height: 155px;
+    border-radius: 5px;
+}
+
+/* Soap Container Styles */
+.jabones-caja {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+/* Cover Styles */
+.portada {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 5px;
+}
+
+.portada-cont {
+    position: relative;
+}
+
+h1{
+    background: none;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    text-shadow: 0 0 3px black, 0 0 5px black;
+}
+
+a{
+    font-size: 20px;
+}
+
+strong{
+    background: none;
+}
+
+del{
+    background: none;
+}
