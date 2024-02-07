@@ -1,37 +1,37 @@
 <?php
-require("../Mail/src/PHPMailer.php");
-require("../Mail/src/SMTP.php");
+function enviarmail()
+{
+    require("../Mail/src/PHPMailer.php");
+    require("../Mail/src/SMTP.php");
 
-function enviarmail($subject, $body, $recipient, $attachmentPath) {
     $smtpServidor = "localhost";
     $smtpUsuario = "nico@troyan";
     $smtpClave = "nico";
     $smtpPuerto = 25;
 
-    $mail = new PHPMailer(true);
+    $mail = new PHPMailer();
 
-    try {
-        $mail->isSMTP();
-        $mail->Mailer = "smtp";
-        $mail->SMTPAutoTLS = true;
-        $mail->isHTML(true);
-        $mail->Port = $smtpPuerto;
-        $mail->Host = $smtpServidor;
-        $mail->SMTPAuth = true;
-        $mail->Username = $smtpUsuario;
-        $mail->Password = $smtpClave;
-        $mail->setFrom($smtpUsuario, "Jaboneria Scarlatti");
-        $mail->Subject = $subject;
-        $mail->addAddress($recipient);
-        $mail->Body = $body;
+    $mail->isSMTP();
+    $mail->Mailer = "SMTP";
+    $mail->SMTPAutoTLS = true;
+    $mail->isHTML(true);
+    $mail->Port = 25;
+    $mail->Host = "localhost";
+    $mail->SMTPAuth = true;
+    $mail->Username = "nico@troyan.com";
+    $mail->Password = "nico";
+    $mail->From = "nico@troyan.com";
+    $mail->Subject = "Factura simplificada";
+    $mail->FromName = "Jaboneria Scarlatti";
+    $mail->addAddress("justin@troyan.com");
 
-        if ($attachmentPath !== null && file_exists($attachmentPath)) {
-            $mail->addAttachment($attachmentPath);
-        }
+    $mail->Body = "Copia de la factura generada automaticamente";
 
-        $mail->send();
+    $mail->addStringAttachment('../PDF/' . $aleatorio_factura, 'Factura' . $aleatorio_factura . '.pdf');
+
+    if ($mail->send()) {
         return true;
-    } catch (Exception $e) {
-        return "Error al enviar el mail: " . $mail->ErrorInfo;
     }
+    return false;
+
 }

@@ -7,7 +7,6 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
-
     $coste = $conexion->prepare("SELECT SUM(productos.precio * item_cesta.cantidad) FROM productos INNER JOIN item_cesta ON productos.producto_ID = item_cesta.producto_ID INNER JOIN cesta ON item_cesta.cesta_ID = cesta.cesta_ID WHERE email = :usuario;");
     $coste->bindParam(":usuario", $_SESSION['usuario']);
 
@@ -50,7 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                 $item_pedido->bindParam(":usuario", $_SESSION['usuario']);
 
                 if ($item_pedido->execute()) {
-                    /* echo "todo bien"; */
                     $borrar_cesta = $conexion->prepare("DELETE FROM cesta WHERE email = :usuario");
                     $borrar_cesta->bindParam(":usuario", $_SESSION['usuario']);
 
@@ -61,55 +59,13 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                         $pdf->generatePDF();
                         $pdf->Output('../PDF/' . $aleatorio_factura, 'S');
 
-                        /* require("../Mail/src/PHPMailer.php");
-                        require("../Mail/src/SMTP.php");
+                        require "correos.php";
 
-                        $smtpServidor = "localhost";
-                        $smtpUsuario = "nico@troyan";
-                        $smtpClave = "nico";
-                        $smtpPuerto = 25;
-
-                        $mail = new PHPMailer();
-
-                        $mail->isSMTP();
-                        $mail->Mailer = "SMTP";
-                        $mail->SMTPAutoTLS = true;
-                        $mail->isHTML(true);
-                        $mail->Port = 25;
-                        $mail->Host = "localhost";
-                        $mail->SMTPAuth = true;
-                        $mail->Username = "nico@troyan.com";
-                        $mail->Password = "nico";
-                        $mail->From = "nico@troyan.com";
-                        $mail->Subject = "Factura simplificada";
-                        $mail->FromName = "Jaboneria Scarlatti";
-                        $mail->addAddress("justin@troyan.com");
-
-                        $mail->setFrom('your-email@example.com', 'Your Name');
-                        $mail->addAddress('recipient@example.com', 'Recipient Name');
-
-                        $mail->Body = "Copia de la factura generada automaticamente";
-
-                        $mail->addStringAttachment('../PDF/' . $aleatorio_factura, 'Factura' . $aleatorio_factura . '.pdf');
-
-                        if ($mail->send()) {
-                            echo 'Correo enviado correctamente.';
-                        } else {
-                            echo 'Error al enviar el correo: ', $mail->ErrorInfo;
-                        } */
-
-                        /* require ("correos.php");
-
-                        $asunto = "Factura simplificada";
-                        $cuerpo = "Copia de la factura generada automáticamente";
-                        $destinatario = "justin@troyan.com";
-                        $rutaAdjunto = '../PDF/' . $aleatorio_factura . '.pdf';
-
-                        if (enviarmail($asunto, $cuerpo, $destinatario, $rutaAdjunto)) {
+                        if (enviarmail()) {
                             echo 'Correo enviado correctamente.';
                         } else {
                             echo 'Error al enviar el correo.';
-                        } */
+                        }
                     } else {
                         echo "Error en el borrado de cesta";
                     }

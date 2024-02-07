@@ -12,9 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $pass = $_POST["pass"];
     }
 
-    /* echo $usuario;
-    echo $pass; */
-
     function correo($usuario) {
         $patron_correo = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/';
 
@@ -67,7 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION['carrito'] = array();
             } else {
                 echo $error_message = "Credenciales no válidas. Inténtalo de nuevo.";
-                /* include("../index.html"); */
             }
         } catch (PDOException $e) {
             die("Error en la consulta: " . $e->getMessage());

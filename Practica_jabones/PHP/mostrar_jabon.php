@@ -27,10 +27,11 @@ if ($id) {
             $resultado_cesta = $consulta_cesta->fetchColumn();
 
             echo '<h1>' . $row['nombre'] . '</h1>';
+            echo '<div>';
             echo '<img src="' . $row['imagen'] . '" alt="' . $row['nombre'] . '">';
             echo '<p>' . $row['descripcion'] . '</p>';
+            echo '</div>';
 
-            /* echo $totalCompras; */
             echo '<form action="carrito.php" method="post">';
             echo '<input type="number" name="cantidad" id="numero" name="numero" min="0" max="' . ($resultado_compras || $resultado_cesta == 2 ? 0 : ($resultado_compras == 1 && $resultado_cesta == 0 ? 1 : ($resultado_compras == 0 && $resultado_cesta == 1 ? 1 : ($resultado_compras == 1 && $resultado_cesta == 1 ? 0 : 2)))) . '" step="1">';
             echo '<input type="hidden" name="producto" value="' . $id . '">';
@@ -64,10 +65,6 @@ if ($id) {
 </head>
 
 <body>
-    <!-- <form action="añadir_carrito.php" method="post">
-    <input type="number" id="numero" name="numero" min="1" max="2" step="1">
-    </form>
-    <a href="añadir_carrito.php"><button>Comprar</button></a> -->
 </body>
 
 </html>

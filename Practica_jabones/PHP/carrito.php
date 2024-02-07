@@ -83,8 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito</title>
-    <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="../CSS/global.css">
+    <link rel="stylesheet" href="../CSS/añadido.css">
 </head>
 
 <body>
@@ -115,10 +115,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             while ($row = $produc_carrito->fetch(PDO::FETCH_ASSOC)) {
                 echo '<h2>Los siguientes productos se añadieron a su cesta</h2>';
+                echo '<div>';
                 echo '<a href="mostrar_jabon.php?id=' . $row['producto_ID'] . '" class="soap-link">';
                 echo '<div class="soap-box">';
                 echo '<img src="' . $row['imagen'] . '" alt="' . $row['nombre'] . '" class="soap-image"><br>';
-                echo '<strong>' . $row['nombre'] . " "  . '</strong>';
+                echo '<strong>' . $row['nombre'] . " " . '</strong>';
 
                 $primera_compra = $conexion->prepare("SELECT email FROM pedidos WHERE email = :usuario");
                 $primera_compra->bindParam(":usuario", $_SESSION["usuario"]);
@@ -133,9 +134,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 } else {
                     echo $row['precio'] . '€';
                 }
-                
+
                 echo '</div>';
                 echo '</a>';
+                echo '</div>';
             }
 
         } else {
@@ -147,14 +149,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $produc_carrito->execute();
 
         if ($produc_carrito->rowCount() > 0) {
+            echo '<div>';
             while ($row = $produc_carrito->fetch(PDO::FETCH_ASSOC)) {
                 echo '<a href="mostrar_jabon.php?id=' . $row['producto_ID'] . '" class="soap-link">';
                 echo '<div class="soap-box">';
                 echo '<img src="' . $row['imagen'] . '" alt="' . $row['nombre'] . '" class="soap-image"><br>';
-                echo '<strong>' . $row['nombre'] . " " . $row['precio'] . "$" . '</strong><br>';
+                echo '<strong>' . $row['nombre'] . " " . '</strong>';
+
+                $primera_compra = $conexion->prepare("SELECT email FROM pedidos WHERE email = :usuario");
+                $primera_compra->bindParam(":usuario", $_SESSION["usuario"]);
+                $primera_compra->execute();
+                if ($primera_compra->rowCount() == 0) {
+                    $precio_original = $row['precio'];
+                    $descuento = $precio_original * 0.35;
+                    $precio_con_descuento = $precio_original - $descuento;
+
+                    echo '<del>' . $precio_original . '</del> ' . number_format($precio_con_descuento, 2) . '€';
+
+                } else {
+                    echo $row['precio'] . '€';
+                }
+
                 echo '</div>';
                 echo '</a>';
             }
+            echo '</div>';
 
         } else {
             echo "No se encontraron jabones en la base de datos.";
@@ -166,7 +185,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <a href="comprar.php"><button>Finalizar compra</button></a>
         <a href="borra_carrito.php"><button>Eliminar del carrito</button></a>
     </div>
-
 </body>
 
 </html>
