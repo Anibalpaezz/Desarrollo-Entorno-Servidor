@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="Icon/favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    <title>Reserva ya tu mesa!</title>
+</head>
+<body>
+    <h1>Bienvenido a mesa-(alvas) las citas</h1>
+    <form action="PHP/restaurante.php" method="post">
+        <label for="restaurante">Restaurante</label>
+        <select name="restaurante" id="restaurante">
+            <option value="bodegon">El bodegon</option>
+            <option value="torres">Las tres torres</option>
+        </select>
+
+        <label for="comensales">Comensales</label>
+        <input type="number" name="comensales" id="comensales">
+
+        <label for="dia">Dia</label>
+        <input type="date" name="dia" id="dia">
+
+        <label for="hora">Hora</label>
+        <input type="time" name="hora" id="hora">
+    </form>
+</body>
+</html>
