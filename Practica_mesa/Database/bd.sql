@@ -59,7 +59,7 @@ CREATE TABLE usuarios (
     ID INT AUTO_INCREMENT primary key,
     usuario VARCHAR(10),
     pass VARCHAR(50) not null,
-    permisos BOOLEAN default false,
+    permisos BOOLEAN default false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Inserts for the usuarios table
