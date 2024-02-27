@@ -19,7 +19,7 @@ function horas() {
 
 function restaurante() {
     try {
-        $consulta = conectarBD()->prepare("SELECT DISTINCT restaurante, capacidad FROM mesa");
+        $consulta = conectarBD()->prepare("SELECT DISTINCT restaurante FROM mesa");
         if ($consulta->execute()) {
             echo "bien";
             $resultados = $consulta->fetchAll();
@@ -29,67 +29,79 @@ function restaurante() {
         throw $th;
     }
 }
+
+function comensales() {
+    try {
+        $consulta = conectarBD()->prepare("SELECT DISTINCT capacidad FROM mesa");
+        if ($consulta->execute()) {
+            echo "bien";
+            $resultados = $consulta->fetchAll();
+            return $resultados;
+        }
+    } catch (\Throwable $th) {
+        throw $th;
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Slide Navbar</title>
+    <title>Mesa-alvas las citas</title>
     <!-- <link rel="stylesheet" type="text/css" href="CSS/index.css"> -->
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <select name="restaurante" id="restaurante">
-        <?php
-        $resultados = restaurante();
+    <form action="plano.php" method="post">
+        <select name="restaurante" id="restaurante">
+            <?php
+            $resultados = restaurante();
 
-        if ($resultados) {
-            foreach ($resultados as $row) {
-                echo "<option value='{$row['restaurante']}'>{$row['restaurante']}</option>";
+            if ($resultados) {
+                foreach ($resultados as $row) {
+                    echo "<option value='{$row['restaurante']}'>{$row['restaurante']}</option>";
+                }
+            } else {
+                echo "<option value=''>No hay restaurantes disponibles</option>";
             }
-        } else {
-            echo "<option value=''>No hay restaurantes disponibles</option>";
-        }
-        ?>
-    </select>
-    
-    <select name="horas" id="horas">
-        <?php
-        $horas = horas();
+            ?>
+        </select>
 
-        if ($horas) {
-            foreach ($horas as $linea) {
-                echo "<option value='{$linea}'>{$linea}</option>";
+        <select name="comensales" id="comensales">
+            <?php
+            $resultados = comensales();
+
+            if ($resultados) {
+                foreach ($resultados as $row) {
+                    echo "<option value='{$row['capacidad']}'>{$row['capacidad']}</option>";
+                }
+            } else {
+                echo "<option value=''>No hay restaurantes disponibles</option>";
             }
-        } else {
-            echo "<option value=''>No hay horas disponibles</option>";
-        }
-        ?>
-    </select>
-    <!-- <div class="main">
-        <input type="checkbox" id="chk" aria-hidden="true">
+            ?>
+        </select>
 
-        <div class="signup">
-            <form>
-                <label for="chk" aria-hidden="true">Sign up</label>
-                <input type="text" name="txt" placeholder="User name" required="">
-                <input type="email" name="email" placeholder="Email" required="">
-                <input type="password" name="pswd" placeholder="Password" required="">
-                <button>Sign up</button>
-            </form>
-        </div>
+        <select name="horas" id="horas">
+            <?php
+            $horas = horas();
 
-        <div class="login">
-            <form>
-                <label for="chk" aria-hidden="true">Login</label>
-                <input type="email" name="email" placeholder="Email" required="">
-                <input type="password" name="pswd" placeholder="Password" required="">
-                <button>Login</button>
-            </form>
-        </div>
-    </div> -->
+            if ($horas) {
+                foreach ($horas as $linea) {
+                    echo "<option value='{$linea}'>{$linea}</option>";
+                }
+            } else {
+                echo "<option value=''>No hay horas disponibles</option>";
+            }
+            ?>
+        </select>
+
+        <input type="date" name="dia" id="dia">
+
+        <button type="submit">Enviar</button>
+    </form>
 </body>
 
 </html>
