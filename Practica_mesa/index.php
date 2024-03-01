@@ -32,7 +32,7 @@ function restaurante() {
 
 function comensales() {
     try {
-        $consulta = conectarBD()->prepare("SELECT DISTINCT capacidad FROM mesa");
+        $consulta = conectarBD()->prepare("SELECT DISTINCT MAX(capacidad) FROM mesa WHERE restaurante = :restaurante");
         if ($consulta->execute()) {
             echo "bien";
             $resultados = $consulta->fetchAll();
@@ -70,9 +70,11 @@ function comensales() {
             ?>
         </select>
 
-        <select name="comensales" id="comensales">
+        <input type="number" name="comensales" id="comensales" max="">
+
+        <!-- <select name="comensales" id="comensales">
             <?php
-            $resultados = comensales();
+            /* $resultados = comensales();
 
             if ($resultados) {
                 foreach ($resultados as $row) {
@@ -80,9 +82,9 @@ function comensales() {
                 }
             } else {
                 echo "<option value=''>No hay restaurantes disponibles</option>";
-            }
+            } */
             ?>
-        </select>
+        </select> -->
 
         <select name="horas" id="horas">
             <?php
@@ -98,7 +100,8 @@ function comensales() {
             ?>
         </select>
 
-        <input type="date" name="dia" id="dia">
+        <input type="date" name="dia" id="dia" min="<?= date("Y-m-d
+        ")?>">
 
         <button type="submit">Enviar</button>
     </form>
