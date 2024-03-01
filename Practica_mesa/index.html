@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mesa-alvas las citas</title>
+    <script>
+        function actualizarCapacidadMaxima() {
+            // Obtener el elemento select de restaurante y el campo de comensales
+            var restauranteSelect = document.getElementById("restaurante");
+            var comensalesInput = document.getElementById("comensales");
+
+            // Obtener el valor seleccionado del restaurante
+            var restauranteSeleccionado = restauranteSelect.value;
+
+            // Enviar una solicitud AJAX para obtener la capacidad máxima del restaurante seleccionado
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Actualizar el atributo max del campo de comensales con la capacidad máxima obtenida
+                    comensalesInput.max = xhr.responseText;
+                }
+            };
+            xhr.open("GET", "datos_index.php?restaurante=" + encodeURIComponent(restauranteSeleccionado), true);
+            xhr.send();
+        }
+    </script>
+</head>
+
+<body>
+    <form action="plano.php" method="post">
+        <select name="restaurante" id="restaurante" onchange="actualizarCapacidadMaxima()">
+            <?php
+            $resultados = restaurante();
+
+            if ($resultados) {
+                foreach ($resultados as $row) {
+                    echo "<option value='{$row['restaurante']}'>{$row['restaurante']}</option>";
+                }
+            } else {
+                echo "<option value=''>No hay restaurantes disponibles</option>";
+            }
+            ?>
+        </select>
+
+        <input type="number" name="comensales" id="comensales" max="">
+
+        <select name="horas" id="horas">
+            <?php
+            $horas = horas();
+
+            if ($horas) {
+                foreach ($horas as $linea) {
+                    echo "<option value='{$linea}'>{$linea}</option>";
+                }
+            } else {
+                echo "<option value=''>No hay horas disponibles</option>";
+            }
+            ?>
+        </select>
+
+        <input type="date" name="dia" id="dia" min="<?= date("Y-m-d") ?>">
+
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+
+</html>
