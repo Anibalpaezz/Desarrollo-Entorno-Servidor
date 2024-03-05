@@ -1,8 +1,9 @@
 <?php
 include("PHP/conexion.php");
 
-function horas() {
-    $archivo = fopen("horas.txt", "r");
+function horas()
+{
+    $archivo = fopen("Doc/horas.txt", "r");
 
     if ($archivo === false) {
         echo "No se pudo abrir el archivo.\n";
@@ -17,7 +18,8 @@ function horas() {
     return $horas;
 }
 
-function restaurante() {
+function restaurante()
+{
     try {
         $consulta = conectarBD()->prepare("SELECT DISTINCT restaurante FROM mesa");
         if ($consulta->execute()) {
@@ -30,7 +32,8 @@ function restaurante() {
     }
 }
 
-function comensales() {
+function comensales()
+{
     try {
         $consulta = conectarBD()->prepare("SELECT DISTINCT MAX(capacidad) FROM mesa WHERE restaurante = :restaurante");
         if ($consulta->execute()) {
@@ -51,59 +54,76 @@ function comensales() {
 
 <head>
     <title>Mesa-alvas las citas</title>
-    <!-- <link rel="stylesheet" type="text/css" href="CSS/index.css"> -->
+    <link rel="shortcut icon" href="Icon/favicon logo.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="CSS/index.css">
+
+    <script>
+        function actualizarCapacidadMaxima() {
+            var restauranteSelect = document.getElementById("restaurante");
+            var comensalesInput = document.getElementById("comensales");
+
+            var restauranteSeleccionado = restauranteSelect.value;
+            console.log(restauranteSeleccionado);
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    comensalesInput.max = xhr.responseText;
+                }
+            };
+            xhr.open("GET", "comensales_index.php?restaurante=" + encodeURIComponent(restauranteSeleccionado), true);
+            xhr.send();
+        }
+    </script>
 </head>
 
 <body>
+    <div style="padding: 25px;"><h1>Bienvenido a Mesa-alvas las citas</h1></div>
+    
     <form action="plano.php" method="post">
-        <select name="restaurante" id="restaurante">
-            <?php
-            $resultados = restaurante();
+    <div style="border-left: 2px solid black;">
+        <div class="form-container">
 
-            if ($resultados) {
-                foreach ($resultados as $row) {
-                    echo "<option value='{$row['restaurante']}'>{$row['restaurante']}</option>";
-                }
-            } else {
-                echo "<option value=''>No hay restaurantes disponibles</option>";
-            }
-            ?>
-        </select>
 
-        <input type="number" name="comensales" id="comensales" max="">
+            <div class="form-group"><label for="restaurante">Elige un restaurante</label>
+                <select name="restaurante" id="restaurante" onchange="actualizarCapacidadMaxima()">
+                    <?php
+                    $resultados = restaurante();
 
-        <!-- <select name="comensales" id="comensales">
-            <?php
-            /* $resultados = comensales();
+                    if ($resultados) {
+                        foreach ($resultados as $row) {
+                            echo "<option value='{$row['restaurante']}'>{$row['restaurante']}</option>";
+                        }
+                    } else {
+                        echo "<option value=''>No hay restaurantes disponibles</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="form-group"><label for="comensales">Numero de comensales</label>
+                <input type="number" name="comensales" id="comensales" max="">
+            </div>
+            <div class="form-group"><label for="horas">En que turno quieres venir</label>
+                <select name="horas" id="horas">
+                    <?php
+                    $horas = horas();
 
-            if ($resultados) {
-                foreach ($resultados as $row) {
-                    echo "<option value='{$row['capacidad']}'>{$row['capacidad']}</option>";
-                }
-            } else {
-                echo "<option value=''>No hay restaurantes disponibles</option>";
-            } */
-            ?>
-        </select> -->
+                    if ($horas) {
+                        foreach ($horas as $linea) {
+                            echo "<option value='{$linea}'>{$linea}</option>";
+                        }
+                    } else {
+                        echo "<option value=''>No hay horas disponibles</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="form-group"><label for="dia">Y por ultimo que dia vendrias</label>
+                <input type="date" name="dia" id="dia" min="<?= date("Y-m-d") ?>">
+            </div>
+        </div>
 
-        <select name="horas" id="horas">
-            <?php
-            $horas = horas();
-
-            if ($horas) {
-                foreach ($horas as $linea) {
-                    echo "<option value='{$linea}'>{$linea}</option>";
-                }
-            } else {
-                echo "<option value=''>No hay horas disponibles</option>";
-            }
-            ?>
-        </select>
-
-        <input type="date" name="dia" id="dia" min="<?= date("Y-m-d
-        ")?>">
-
-        <button type="submit">Enviar</button>
+        <button type="submit">Enviar</button></div>
     </form>
 </body>
 

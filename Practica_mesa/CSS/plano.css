@@ -1,0 +1,55 @@
+*,
+        body {
+            text-align: center
+        }
+
+        button,
+        img {
+            cursor: pointer
+        }
+
+        * {
+            align-items: center
+        }
+
+        body {
+            background-color: #cab991;
+            color: #333;
+            align-items: center;
+            justify-content: center;
+            margin: 0
+        }
+
+        img {
+            max-width: 75px;
+        }
+
+        input[type=radio] {
+            display: none
+        }
+
+        input[type=radio]:checked+#fotos {
+            border: 2px solid red;
+        }
+
+        #fotos {
+            display: inline-block;
+            cursor: pointer;
+            margin: 5px;
+            padding: 5px;
+            border: 2px solid #ccc
+        }
+
+        table {
+            margin-top: 15px;
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        .reservada {
+            cursor: not-allowed;
+        }
+
+        .disponible {
+            cursor: pointer;
+        }
