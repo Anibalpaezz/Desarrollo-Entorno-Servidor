@@ -18,11 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="Icon/favicon logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="CSS/globales.css">
+    <link rel="stylesheet" type="text/css" href="CSS/confirmacion.css">
     <title>Confirmar reserva</title>
 </head>
 
 <body>
-    <h2>Confirmar la reserva</h2>
+    <h1>Confirmar la reserva</h1>
     <form action="correo.php" method="post">
         <label for="correo">Correo electronico: </label>
         <input type="email" name="correo" id="correo">

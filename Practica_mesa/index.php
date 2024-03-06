@@ -55,6 +55,7 @@ function comensales()
 <head>
     <title>Mesa-alvas las citas</title>
     <link rel="shortcut icon" href="Icon/favicon logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="CSS/globales.css">
     <link rel="stylesheet" type="text/css" href="CSS/index.css">
 
     <script>
@@ -101,7 +102,7 @@ function comensales()
                 </select>
             </div>
             <div class="form-group"><label for="comensales">Numero de comensales</label>
-                <input type="number" name="comensales" id="comensales" max="">
+                <input type="number" name="comensales" id="comensales" min="1" max="">
             </div>
             <div class="form-group"><label for="horas">En que turno quieres venir</label>
                 <select name="horas" id="horas">

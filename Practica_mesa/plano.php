@@ -58,16 +58,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="Icon/favicon logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="CSS/globales.css">
     <link rel="stylesheet" href="CSS/plano.css">
-    <title>Mesas</title>
+    <title>Elige las mesa</title>
 </head>
 
 <body>
-    <h2>Bienvenido a
-        <?php echo $restaurante ?>
-    </h2>
-    Reservado: <img style="max-width: 25px;" src="Images/reservada.png" alt="Mesa Reservada">
-    Disponible <img style="max-width: 25px;" src="Images/disponible.png" alt="Mesa Disponible">
+    <h1>Bienvenido a
+        <?php echo $_SESSION['restaurante'] ?>
+    </h1>
+    <div>
+        <label for="reservada">Reservada</label>
+    <img name="reservada" style="max-width: 35px;" src="Images/reservada.png" alt="Mesa Reservada">
+    </div>
+    <div>
+        <label for="reservada">Disponible</label>
+        <img name="disponible" style="max-width: 35px;" src="Images/disponible.png" alt="Mesa Disponible">
+    </div>
     <br><br><br>
     <form action="confirmacion.php" method="POST">
         <table>

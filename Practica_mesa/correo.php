@@ -20,9 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $inser_reserva->bindParam(':numPersonas', $_SESSION['comensales'], PDO::PARAM_INT);
 
             if ($inser_reserva->execute()) {
-                $mensajeConfirmacion = "¡Reserva completada con éxito! Hemos enviado un correo de confirmación a tu dirección. Gracias por elegirnos.";
+                echo "<div>";
+                echo "<h1>¡Reserva completada con éxito! Hemos enviado un correo de confirmación a tu dirección. Gracias por elegirnos.</h1>";
+                echo '<a href="index.php"><button>Volver</button></a>';
+                echo "</div>";
 
-                echo $mensajeConfirmacion;
+                session_destroy();
             }
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -32,3 +35,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="Icon/favicon logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="CSS/globales.css">
+    <link rel="stylesheet" type="text/css" href="CSS/correo.css">
+    <title>Reserva completada</title>
+</head>
+<body>
+    
+</body>
+</html>
