@@ -71,7 +71,7 @@ try {
 
     <br>
 
-    <form method="post" action="agregar_producto.php">
+    <form method="post" action="añadir.php">
         <button type="submit">Añadir Nuevo Producto</button>
     </form>
 
