@@ -1,15 +1,8 @@
-drop database inmobiliaria;
-drop table noticias;
-drop table categorias;
-drop table usuarios;
+drop database IF EXISTS inmobiliaria;
 
+create database IF NOT EXISTS inmobiliaria character set utf8mb4 collate utf8mb4_spanish_ci;
 use inmobiliaria;
-select * from noticias;
 
-create database inmobiliaria character set utf8mb4 collate utf8mb4_spanish_ci;
-
-use inmobiliaria;
-use inmobiliaria;
 create table categorias(
     nombre varchar(50) primary key,
     descripcion text
@@ -57,5 +50,3 @@ CREATE TABLE votos(
     votos2 INT(10) unsigned NOT NULL default '0'
 )engine=innodb;
 INSERT INTO votos VALUES (1, 49, 12);
-
-

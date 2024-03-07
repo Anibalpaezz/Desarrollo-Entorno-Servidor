@@ -1,0 +1,12 @@
+table, tr {
+    height: 20px;
+}
+
+form {
+    background-color: unset;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: none;
+    max-width: 400px;
+    margin: 5px auto;
+}

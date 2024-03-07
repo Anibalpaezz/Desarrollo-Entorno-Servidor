@@ -1,8 +1,5 @@
 <?php
-$host = 'localhost';
-$dbname = 'jaboneria';
-$username = 'anibal';
-$password = 'nico';
+include("conexion.php");
 
 try {
     $conexion = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
@@ -20,11 +17,16 @@ try {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Productos</title>
+    <link rel="shortcut icon" href="../Icon/favicon logo.png" type="image/x-icon">
+    <title>Enjabon-arte</title>
+    <link rel="stylesheet" href="../CSS/global.css">
+    <link rel="stylesheet" href="../CSS/admin.css">
 </head>
+
 <body>
 
     <h1>Lista de Productos</h1>
@@ -37,11 +39,11 @@ try {
                 <th>Descripción</th>
                 <th>Peso</th>
                 <th>Precio</th>
-                <th>Acciones</th>
+                <th colspan="2">Acciones</th> <!-- colspan="2" para que ocupe dos celdas -->
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($productos as $producto): ?>
+            <?php foreach ($productos as $producto) : ?>
                 <tr>
                     <td><?php echo $producto['producto_ID']; ?></td>
                     <td><?php echo $producto['nombre']; ?></td>
@@ -49,9 +51,17 @@ try {
                     <td><?php echo $producto['peso']; ?></td>
                     <td><?php echo $producto['precio']; ?></td>
                     <td>
-                        <form method="post" action="eliminar_producto.php">
-                            <input type="hidden" name="producto_id" value="<?php echo $producto['producto_ID']; ?>">
+                        <form method="post" action="acciones.php">
+                            <input type="hidden" name="elim_id" value="<?php echo $producto['producto_ID']; ?>">
+                            <input type="hidden" name="eliminar_producto" value="true">
                             <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="acciones.php">
+                            <input type="hidden" name="edit_id" value="<?php echo $producto['producto_ID']; ?>">
+                            <input type="hidden" name="editar_producto" value="true">
+                            <button type="submit">Editar</button>
                         </form>
                     </td>
                 </tr>
@@ -66,4 +76,5 @@ try {
     </form>
 
 </body>
+
 </html>

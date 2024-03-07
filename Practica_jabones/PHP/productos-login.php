@@ -10,15 +10,19 @@ if (!isset($_SESSION['usuario'])) {
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Jabones</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="shortcut icon" href="../Icon/favicon logo.png" type="image/x-icon">
+    <title>Enjabon-arte</title>
     <link rel="stylesheet" href="../CSS/global.css">
     <link rel="stylesheet" href="../CSS/productos-login.css">
 </head>
 
 <body>
     <nav class="navegacion">
-        <a href=""><button>Administracion</button></a>
+        <?php
+            if ($_SESSION['permisos'] == 1) {
+                echo '<a href="admin.php"><button>Administracion</button></a>';
+            }
+        ?>
         <a href="carrito.php"><button>Ver carrito</button></a>
         <a href="cerrar_sesion.php"><button>Cerrar sesion</button></a>
     </nav>
@@ -57,7 +61,7 @@ if (!isset($_SESSION['usuario'])) {
                 while ($row = $resultado->fetch(PDO::FETCH_ASSOC)) {
                     echo '<a href="mostrar_jabon.php?id=' . $row['producto_ID'] . '">';
                     echo '<div class="soap-box">';
-                    echo '<img src="' . $row['imagen'] . '" alt="' . $row['nombre'] . '" class="soap-image"><br>';
+                    echo '<img src="../' . $row['imagen'] . '" alt="' . $row['nombre'] . '" class="soap-image"><br>';
                     echo '<strong>' . $row['nombre'] . '</strong><br>';
                     if ($primera_compra->rowCount() == 0) {
                         $precio_original = $row['precio'];

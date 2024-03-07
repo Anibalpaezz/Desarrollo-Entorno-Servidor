@@ -3,7 +3,7 @@ include("conexion.php");
 
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('Location: ../index.html');
+    header('Location: ../HTML/sesion.html');
 }
 
 $id = isset($_GET['id']) ? $_GET['id'] : null;
@@ -54,6 +54,7 @@ if ($id) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../Icon/favicon logo.png" type="image/x-icon">
     <title>
         <?php echo $row['nombre'] ?>
     </title>

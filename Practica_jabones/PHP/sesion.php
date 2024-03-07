@@ -38,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($resultado) {
                 echo "bien correo";
                 header("Location: productos-login.php");
+                $_SESSION['permisos'] = 0;
                 $_SESSION['usuario'] = $usuario;
                 $_SESSION['carrito'] = array();
             } else {
@@ -60,6 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($resultado) {
                 echo "bien user";
                 header("Location: productos-login.php");
+                $_SESSION['permisos'] = 1;
                 $_SESSION['usuario'] = $usuario;
                 $_SESSION['carrito'] = array();
             } else {
