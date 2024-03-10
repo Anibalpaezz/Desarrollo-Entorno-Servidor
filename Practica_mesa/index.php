@@ -81,10 +81,9 @@ function comensales()
 <body>
     <div style="padding: 25px;"><h1>Bienvenido a Mesa-alvas las citas</h1></div>
     
-    <form action="plano.php" method="post">
+    <form action="PHP/plano.php" method="post">
     <div style="border-left: 2px solid black;">
         <div class="form-container">
-
 
             <div class="form-group"><label for="restaurante">Elige un restaurante</label>
                 <select name="restaurante" id="restaurante" onchange="actualizarCapacidadMaxima()">
@@ -108,7 +107,6 @@ function comensales()
                 <select name="horas" id="horas">
                     <?php
                     $horas = horas();
-
                     if ($horas) {
                         foreach ($horas as $linea) {
                             echo "<option value='{$linea}'>{$linea}</option>";

@@ -1,0 +1,6 @@
+Enunciado del ejercicio:
+Desarrolla un sistema de gestión de inventario para una tienda en línea que almacena información sobre productos, proveedores y órdenes de compra. Debes crear un script en PHP que realice las siguientes tareas:
+
+Recorre la tabla de productos y verifica si hay productos con una cantidad en stock por debajo de un umbral especificado. Si es así, genera automáticamente una orden de compra para reabastecer el inventario.
+Para cada producto que requiera una orden de compra, encuentra el proveedor más adecuado basándote en criterios como precio, tiempo de entrega y calidad del producto.
+Inserta la orden de compra en la base de datos y actualiza el inventario de productos con las cantidades compradas.

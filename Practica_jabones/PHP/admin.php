@@ -6,7 +6,7 @@ try {
     $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $conexion->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
-    // Fetch products from the 'productos' table
+    
     $query = $conexion->prepare("SELECT * FROM productos");
     $query->execute();
     $productos = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -39,7 +39,7 @@ try {
                 <th>Descripción</th>
                 <th>Peso</th>
                 <th>Precio</th>
-                <th colspan="2">Acciones</th> <!-- colspan="2" para que ocupe dos celdas -->
+                <th colspan="2">Acciones</th>
             </tr>
         </thead>
         <tbody>

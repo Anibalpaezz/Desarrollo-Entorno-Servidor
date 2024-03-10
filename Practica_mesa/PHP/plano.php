@@ -1,25 +1,29 @@
 <?php
-include("PHP/conexion.php");
+include("conexion.php");
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $restaurante = $_POST['restaurante'];
     $comensales = $_POST['comensales'];
     $fecha = $_POST['dia'];
-    $hora = $_POST['horas'];
 
-    $_SESSION['restaurante'] = $restaurante;
+    $hora = $_POST['horas'];
+    $formato = "H:i:s";
+    $hora_time = DateTime::createFromFormat($formato, $hora);
+
+    /* $_SESSION['restaurante'] = $restaurante;
     $_SESSION['comensales'] = $comensales;
     $_SESSION['fecha'] = $fecha;
-    $_SESSION['hora'] = $hora;
+    $_SESSION['hora'] = $hora; */
 
-    function reservas($restaurante)
+    function reservas($restaurante, $fecha)
     {
         try {
             $consulta = conectarBD()->prepare("SELECT * FROM mesa 
         INNER JOIN reservas ON mesa.numMesa = reservas.numMesa 
-        WHERE mesa.restaurante = :restaurante");
+        WHERE mesa.restaurante = :restaurante AND fecha = :fecha");
             $consulta->bindParam(":restaurante", $restaurante);
+            $consulta->bindParam(":fecha", $fecha);
             if ($consulta->execute()) {
                 echo "";
             } else {
@@ -29,9 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw $th;
         }
 
-
         $reservadas = $consulta->fetchAll(PDO::FETCH_ASSOC);
-
         return $reservadas;
     }
 
@@ -57,9 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="Icon/favicon logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="CSS/globales.css">
-    <link rel="stylesheet" href="CSS/plano.css">
+    <link rel="shortcut icon" href="../Icon/favicon logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../CSS/globales.css">
+    <link rel="stylesheet" href="../CSS/plano.css">
     <title>Elige las mesa</title>
 </head>
 
@@ -69,11 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </h1>
     <div>
         <label for="reservada">Reservada</label>
-    <img name="reservada" style="max-width: 35px;" src="Images/reservada.png" alt="Mesa Reservada">
+        <img name="reservada" style="max-width: 35px;" src="../Images/reservada.png" alt="Mesa Reservada">
     </div>
     <div>
         <label for="reservada">Disponible</label>
-        <img name="disponible" style="max-width: 35px;" src="Images/disponible.png" alt="Mesa Disponible">
+        <img name="disponible" style="max-width: 35px;" src="../Images/disponible.png" alt="Mesa Disponible">
     </div>
     <br><br><br>
     <form action="confirmacion.php" method="POST">
@@ -81,7 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php
             $numFilas = 3;
             $numColumnas = 3;
-
             for ($i = 0; $i < $numFilas; $i++) {
                 echo '<tr>';
                 for ($j = 0; $j < $numColumnas; $j++) {
@@ -89,26 +90,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     echo '<td>';
                     echo '<input type="radio" name="mesas" value="' . $mesaId . '" id="' . $mesaId . '"';
 
-
                     $mesaReservada = true;
-                    $resultados = reservas($restaurante);
+                    $resultados = reservas($restaurante, $fecha);
                     foreach ($resultados as $row) {
+                        $hora_reservada = new DateTime($row['hora']);
+                        $hora_fin = $hora_reservada->add(new DateInterval('PT1H30M'));
+
+                        if ($hora_fin <= $hora_time) {
+                            $mesaReservada = false;
+                        }
                         if ($row['numMesa'] == $mesaId) {
                             $mesaReservada = false;
-                            break;
                         }
                     }
-                    if ($mesaReservada === false) {
-                        echo ' disabled';
+
+                    if ($mesaReservada && $comensales <= sitios($mesaId)) {
+                        echo '';
+                    } else {
+                        echo 'style="cursor: not-allowed;" disabled';
                     }
+
                     echo '>';
                     echo '<label id="fotos" for=' . $mesaId . '>';
 
-                    // Use sitios() to get the capacity
-                    if ($mesaReservada) {
-                        echo '<img class="disponible" src="Images/disponible.png" alt="Mesa Disponible">';
+                    if ($mesaReservada && $comensales <= sitios($mesaId)) {
+                        echo '<img class="disponible" src="../Images/disponible.png" alt="Mesa Disponible">';
                     } else {
-                        echo '<img class="reservada" src="Images/reservada.png" alt="Mesa Reservada">';
+                        echo '<img class="reservada" src="../Images/reservada.png" alt="Mesa Reservada">';
                     }
                     echo "<br>";
                     echo 'Mesa ' . $mesaId;

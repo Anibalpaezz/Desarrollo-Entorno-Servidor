@@ -53,6 +53,10 @@ INSERT INTO reservas VALUES (02, 'El Bodegón', 'maria@gmail.com', '2024/05/31',
 INSERT INTO reservas VALUES (03, 'El Bodegón', 'manuel@gmail.com', '2024/05/31', '14:00', 'R', 4);
 INSERT INTO reservas VALUES (06, 'El Bodegón', 'juanjo@gmail.com', '2024/05/31', '14:00', 'R', 4);
 INSERT INTO reservas VALUES (09, 'El Bodegón', 'adriana@gmail.com', '2024/05/31', '14:00', 'C', 4);
+UPDATE reservas
+SET fecha = '2024-03-09'
+WHERE fecha = '2024-05-31';
+
 
 DROP TABLE IF EXISTS usuario;
 CREATE TABLE usuarios (

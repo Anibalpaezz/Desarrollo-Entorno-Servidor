@@ -13,8 +13,7 @@ if (isset($_GET['restaurante'])) {
             echo $capacidadMaxima;
         }
     } catch (\Throwable $th) {
-        // Manejar el error según sea necesario
         echo "Error al obtener la capacidad máxima.";
     }
 }
-?>
+
