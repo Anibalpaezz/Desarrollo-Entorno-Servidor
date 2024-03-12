@@ -1,4 +1,5 @@
 <?php
+session_start();
 function enviarmail()
 {
     require("../Mail/src/PHPMailer.php");
@@ -23,7 +24,7 @@ function enviarmail()
     $mail->From = "nico@troyan.com";
     $mail->Subject = "Factura simplificada";
     $mail->FromName = "Jaboneria Scarlatti";
-    $mail->addAddress("justin@troyan.com");
+    $mail->addAddress($_SESSION['usuario']);
 
     $mail->Body = "Copia de la factura generada automaticamente";
 

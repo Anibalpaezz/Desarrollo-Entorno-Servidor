@@ -3,6 +3,10 @@ session_start();
 if (!isset($_SESSION['usuario'])) {
     header('Location: ../index.html');
 }
+
+$productosPorPagina = 5;
+$paginaActual = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$inicio = ($paginaActual - 1) * $productosPorPagina;
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +14,8 @@ if (!isset($_SESSION['usuario'])) {
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="shortcut icon" href="../Icon/favicon logo.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../Icon/favicon logo.png" type="image/x-icon">
     <title>Enjabon-arte</title>
     <link rel="stylesheet" href="../CSS/global.css">
     <link rel="stylesheet" href="../CSS/productos-login.css">
@@ -19,9 +24,9 @@ if (!isset($_SESSION['usuario'])) {
 <body>
     <nav class="navegacion">
         <?php
-            if ($_SESSION['permisos'] == 1) {
-                echo '<a href="admin.php"><button>Administracion</button></a>';
-            }
+        if ($_SESSION['permisos'] == 1) {
+            echo '<a href="admin.php"><button>Administracion</button></a>';
+        }
         ?>
         <a href="carrito.php"><button>Ver carrito</button></a>
         <a href="cerrar_sesion.php"><button>Cerrar sesion</button></a>
@@ -50,10 +55,12 @@ if (!isset($_SESSION['usuario'])) {
     <div class="jabones-caja">
 
         <?php
-        include("conexion.php");
-
         try {
-            $consulta = "SELECT * FROM productos";
+            $totalProductos = $conexion->query("SELECT COUNT(*) FROM productos")->fetchColumn();
+
+            $totalPaginas = ceil($totalProductos / $productosPorPagina);
+
+            $consulta = "SELECT * FROM productos LIMIT $inicio, $productosPorPagina";
             $resultado = $conexion->prepare($consulta);
             $resultado->execute();
 
@@ -67,15 +74,20 @@ if (!isset($_SESSION['usuario'])) {
                         $precio_original = $row['precio'];
                         $descuento = $precio_original * 0.35;
                         $precio_con_descuento = $precio_original - $descuento;
-
                         echo '<del>' . $precio_original . '</del> ' . number_format($precio_con_descuento, 2) . '€';
-
                     } else {
                         echo $row['precio'] . '€';
                     }
                     echo '</div>';
                     echo '</a>';
                 }
+
+                echo '<div class="pagination">';
+                for ($i = 1; $i <= $totalPaginas; $i++) {
+                    echo " ";
+                    echo '<a href="?page=' . $i . '">' . $i . '</a>';
+                }
+                echo '</div>';
 
             } else {
                 echo "No se encontraron jabones en la base de datos.";
@@ -87,7 +99,6 @@ if (!isset($_SESSION['usuario'])) {
         $conexion = null;
         ?>
     </div>
-
 </body>
 
 </html>

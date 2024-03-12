@@ -51,14 +51,14 @@ try {
                     <td><?php echo $producto['peso']; ?></td>
                     <td><?php echo $producto['precio']; ?></td>
                     <td>
-                        <form method="post" action="acciones.php">
+                        <form method="post" action="eliminar.php">
                             <input type="hidden" name="elim_id" value="<?php echo $producto['producto_ID']; ?>">
                             <input type="hidden" name="eliminar_producto" value="true">
                             <button type="submit">Eliminar</button>
                         </form>
                     </td>
                     <td>
-                        <form method="post" action="acciones.php">
+                        <form method="post" action="editar.php">
                             <input type="hidden" name="edit_id" value="<?php echo $producto['producto_ID']; ?>">
                             <input type="hidden" name="editar_producto" value="true">
                             <button type="submit">Editar</button>
